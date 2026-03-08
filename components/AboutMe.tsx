@@ -118,8 +118,8 @@ const AboutMe = () => {
                                 <motion.div 
                                     key={exp.id}
                                     variants={{
-                                        hidden: { opacity: 0, x: 50 },
-                                        visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                                        hidden: { opacity: 0, y: -50 }, // Mulai dari atas
+                                        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } // Meluncur ke bawah (posisi normal)
                                     }}
                                     className="relative pl-8 md:pl-10"
                                 >

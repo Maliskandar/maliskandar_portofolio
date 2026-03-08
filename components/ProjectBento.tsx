@@ -182,27 +182,10 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
             className={`group relative overflow-hidden rounded-3xl border border-gray-800 cursor-pointer transition-shadow hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.15)] ${project.span} ${project.bg}`}
         >
-            {/* Image Cover */}
-            {project.image ? (
-                <>
-                    <div className="absolute inset-0 w-full h-full">
-                        <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
-                    </div>
-                    {/* Gradient overlay for text */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                </>
-            ) : (
-                /* Watermark Fallback if no Image */
-                <div className="absolute -right-10 -bottom-10 text-[12rem] text-white/5 rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
-                    {project.stack[0]}
-                </div>
-            )}
+            {/* Watermark Fallback background for all cards */}
+            <div className="absolute -right-10 -bottom-10 text-[12rem] text-white/5 rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
+                {project.stack[0]}
+            </div>
 
             {/* Content Container */}
             <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">

@@ -1,7 +1,6 @@
-import BackendSpotlight from '@/components/BackendSpontlight';
 import ContactTerminal from '@/components/ContactTerminal';
 import ProjectBento from '@/components/ProjectBento';
-import TechOrbit from '@/components/TechOrbit';
+import TechMarquee from '@/components/TechMarquee';
 import Hero from '../components/Hero';
 import AboutMe from '@/components/AboutMe';
 import Certifications from '@/components/Certifications';
@@ -12,9 +11,9 @@ export default function Home() {
       <Hero />
       <AboutMe />
       <Certifications />
-      <TechOrbit />
+
+      <TechMarquee />
       <ProjectBento />
-      <BackendSpotlight />
       <ContactTerminal />
     </main>
   );
