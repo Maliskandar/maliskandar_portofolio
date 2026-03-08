@@ -38,8 +38,8 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof fron
     return (
         <div className="relative flex w-full overflow-hidden py-4 group">
             {/* Fade overlays for the edges */}
-            <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-linear-to-r from-dark to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-linear-to-l from-dark to-transparent z-10 pointer-events-none" />
 
             <motion.div
                 className="flex gap-4 md:gap-8 min-w-max"
@@ -53,7 +53,7 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof fron
                 {duplicatedItems.map((tech, index) => (
                     <div 
                         key={index} 
-                        className="flex flex-col items-center justify-center min-w-[120px] md:min-w-[160px] p-6 bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl hover:bg-gray-800/80 transition-all duration-300 group-hover:pause"
+                        className="flex flex-col items-center justify-center min-w-30 md:min-w-40 p-6 bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl hover:bg-gray-800/80 transition-all duration-300 group-hover:pause"
                         style={{ '--hover-color': tech.color } as React.CSSProperties}
                         onMouseEnter={(e) => {
                             e.currentTarget.style.borderColor = tech.color;
@@ -87,7 +87,7 @@ const TechMarquee = () => {
         <section id="stack" className="relative w-full py-24 bg-dark overflow-hidden border-t-2 border-b-2 border-gray-900/50">
             
             {/* Grid Background Pattern */}
-            <div className="absolute inset-x-0 top-0 h-full opacity-[0.03] pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-dark to-dark" />
+            <div className="absolute inset-x-0 top-0 h-full opacity-[0.03] pointer-events-none bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-white via-dark to-dark z-0" />
 
             {/* Section Header */}
             <div className="max-w-7xl mx-auto px-6 md:px-20 mb-16 relative z-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">

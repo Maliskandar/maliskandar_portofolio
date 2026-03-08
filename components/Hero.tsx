@@ -168,17 +168,17 @@ const Hero = () => {
                             </motion.div>
 
                             {/* Floating Tech Badges (3D depth effect) */}
-                            <motion.div
+                            {/* <motion.div
                                 style={{ translateZ: 80 }}
                                 className="absolute top-8 left-8 bg-black/40 backdrop-blur px-4 py-2 border border-white/10 rounded-lg text-xs font-mono text-gray-300"
                             >
-                                PHP v8.2
-                            </motion.div>
+
+                            </motion.div> */}
                             <motion.div
                                 style={{ translateZ: 100 }}
                                 className="absolute bottom-16 -right-6 md:-right-2 bg-primary/10 backdrop-blur px-4 py-2 border border-primary/20 rounded-lg text-xs font-bold text-primary"
                             >
-                                Laravel 10.x
+                                S.Kom
                             </motion.div>
                         </div>
                     </motion.div>

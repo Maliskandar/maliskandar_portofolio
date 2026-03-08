@@ -62,12 +62,12 @@ const ContactTerminal = () => {
         setStatus('processing');
         setLogs(["> Initializing handshake...", "> Validating input fields..."]);
 
-        // Efek visual tetap ada agar terlihat keren
+        // Visual effect remains for cool factor
         setTimeout(() => setLogs(prev => [...prev, "> Encrypting data (TLSv1.3)..."]), 500);
         setTimeout(() => setLogs(prev => [...prev, "> Connecting to mail server..."]), 1000);
 
         try {
-            // PANGGIL API SUNGGUHAN DI SINI
+            // CALL REAL API HERE
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
@@ -77,14 +77,14 @@ const ContactTerminal = () => {
             });
 
             if (response.ok) {
-                // Jika sukses
+                // If success
                 setLogs(prev => [...prev, "> Payload delivered.", "> Server responded: 200 OK"]);
                 setStatus('success');
                 setFormData({ email: '', message: '' });
             } else {
-                // Jika gagal
+                // If failed
                 setLogs(prev => [...prev, "> Error: Server rejected connection.", "> Status: 500"]);
-                setStatus('idle'); // Kembalikan ke mode input
+                setStatus('idle'); // Return to input mode
             }
         } catch (error) {
             setLogs(prev => [...prev, "> Critical Error: Network unreachable."]);
@@ -97,7 +97,7 @@ const ContactTerminal = () => {
 
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Initialize <span className="text-primary">Contact</span></h2>
-                    <p className="text-gray-400">Siap memulai proyek baru? Kirimkan transmisi di bawah ini.</p>
+                    <p className="text-gray-400">Ready to start a new project? Send your transmission below.</p>
                 </div>
 
                 {/* Terminal Window */}

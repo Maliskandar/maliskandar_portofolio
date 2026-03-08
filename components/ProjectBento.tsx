@@ -103,7 +103,7 @@ const ProjectBento = () => {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     return (
-        <section id="work" className="relative w-full min-h-screen bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans">
+        <section id="work" className="relative w-full min-h-screen bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50">
             
             {/* Header */}
             <div className="max-w-7xl mx-auto mb-16 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">

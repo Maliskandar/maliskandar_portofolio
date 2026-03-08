@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll } from 'framer-motion';
 import { FiDownload, FiBriefcase, FiBookOpen } from 'react-icons/fi';
 
 const experiences = [
@@ -29,9 +29,16 @@ const experiences = [
 ];
 
 const AboutMe = () => {
+    // Scroll progress line tracker
+    const lineRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: lineRef,
+        offset: ["start center", "end center"]
+    });
+
     return (
-        <section id="about" className="w-full min-h-screen bg-dark py-20 px-6 md:px-20 border-t border-gray-800/50 relative overflow-hidden">
-            
+        <section id="about" className="w-full min-h-screen bg-dark py-20 px-6 md:px-20 border-t border-gray-800/50 relative overflow-x-clip z-10">
+
             {/* Background Accent */}
             <div className="absolute top-0 right-0 -mr-40 -mt-40 w-96 h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
 
@@ -59,16 +66,16 @@ const AboutMe = () => {
                         <h3 className="text-2xl font-bold text-white mb-4">
                             Passionate Developer Crafting <br /> Seamless Digital Experiences
                         </h3>
-                        
+
                         <div className="space-y-4 text-gray-300 leading-relaxed text-lg text-justify">
                             <p>
-                                Hi, saya <strong>Muhammad Akmal Iskandar</strong>. Seorang lulusan Informatika yang sangat mudah beradaptasi dengan pengalaman langsung di ranah Full-Stack Web Development.
+                                Hi, I am <strong>Muhammad Akmal Iskandar</strong>. A highly adaptable Informatics graduate with hands-on experience in Full-Stack Web Development.
                             </p>
                             <p>
-                                Saya memiliki keahlian kuat di bidang <em>backend engineering</em> menggunakan <strong>Laravel & MySQL</strong>, yang dibuktikan melalui pengembangan sistem manajemen kompleks untuk sektor pemerintahan dan kesehatan.
+                                I have strong expertise in <em>backend engineering</em> using <strong>Laravel & MySQL</strong>, proven through the development of complex management systems for the government and healthcare sectors.
                             </p>
                             <p>
-                                Di samping itu, saya juga cukup mahir menggunakan ekosistem frontend modern seperti <strong>Next.js, React, dan Tailwind CSS</strong> untuk membangun user interface yang responsif dengan performa tinggi.
+                                Furthermore, I am also proficient in modern frontend ecosystems such as <strong>Next.js, React, and Tailwind CSS</strong> to build high-performance, responsive user interfaces.
                             </p>
                         </div>
 
@@ -86,11 +93,11 @@ const AboutMe = () => {
 
                         {/* Download CV Action */}
                         <div className="pt-6">
-                            <a 
-                                href="/CV Muhammad Akmal Iskandar.pdf" 
+                            <a
+                                href="/CV Muhammad Akmal Iskandar.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-primary hover:text-white transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/30"
+                                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-black hover:text-white transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary/30"
                             >
                                 <FiDownload size={18} /> Download Full CV
                             </a>
@@ -113,9 +120,18 @@ const AboutMe = () => {
                             <h3 className="text-2xl font-bold text-white">Work Experience</h3>
                         </div>
 
-                        <div className="relative border-l border-gray-800 ml-3 md:ml-4 space-y-12 pb-4">
-                            {experiences.map((exp) => (
+                        <div className="relative ml-2 md:ml-4 space-y-12 pb-4">
+                            
+                            {/* Vertical Line for About Me */}
+                            <div ref={lineRef} className="absolute left-0 top-2 -bottom-24 md:-bottom-32 w-0.5 bg-gray-800/30 origin-top z-0">
                                 <motion.div 
+                                    style={{ scaleY: scrollYProgress }} 
+                                    className="w-full h-full bg-linear-to-b from-primary via-secondary to-primary origin-top shadow-[0_0_15px_rgba(0,240,255,0.6)]" 
+                                />
+                            </div>
+
+                            {experiences.map((exp) => (
+                                <motion.div
                                     key={exp.id}
                                     variants={{
                                         hidden: { opacity: 0, y: -50 }, // Mulai dari atas
@@ -124,9 +140,9 @@ const AboutMe = () => {
                                     className="relative pl-8 md:pl-10"
                                 >
                                     {/* Timeline Dot */}
-                                    <div className="absolute w-4 h-4 rounded-full bg-primary -left-[8.5px] top-1 shadow-[0_0_10px_rgba(0,240,255,0.8)] border-4 border-dark"></div>
-                                    
-                                    <div className="bg-gray-900/40 hover:bg-gray-800/60 p-6 rounded-2xl border border-gray-800 hover:border-gray-600 transition-colors duration-300">
+                                    <div className="absolute w-4 h-4 rounded-full bg-primary -left-1.75 top-1 shadow-[0_0_10px_rgba(0,240,255,0.8)] border-4 border-dark z-10 transition-transform duration-300 hover:scale-150 cursor-pointer"></div>
+
+                                    <div className="bg-gray-900/40 hover:bg-gray-800/60 p-6 rounded-2xl border border-gray-800 hover:border-gray-600 transition-colors duration-300 relative z-10">
                                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
                                             <h4 className="text-xl font-bold text-white">{exp.role}</h4>
                                             <span className="text-xs font-mono text-primary bg-primary/10 px-3 py-1 rounded-full w-fit">

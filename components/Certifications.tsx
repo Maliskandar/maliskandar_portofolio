@@ -1,13 +1,13 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiAward, FiCalendar } from 'react-icons/fi';
 
 const certifications = [
     {
         id: 1,
-        title: "Belajar Pengembangan Aplikasi Android Intermediate",
+        title: "Intermediate Android Application Development",
         issuer: "Dicoding",
         date: "June 2024",
     },
@@ -19,7 +19,7 @@ const certifications = [
     },
     {
         id: 3,
-        title: "Memulai Dasar Pemrograman untuk Menjadi Pengembang Software",
+        title: "Introduction to Programming Basics for Software Developers",
         issuer: "Dicoding",
         date: "February 2024",
     },
@@ -55,9 +55,27 @@ const cardVariants = {
 };
 
 const Certifications = () => {
+    const sectionRef = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start center", "end center"]
+    });
+
+    // Horizontal spread logic: Completes by the time user scrolls 15% of the section
+    const scaleX = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+
     return (
-        <section id="certifications" className="w-full min-h-screen bg-dark py-20 px-6 md:px-20 border-t border-gray-800/50">
-            <div className="max-w-7xl mx-auto">
+        <section ref={sectionRef} id="certifications" className="relative w-full min-h-screen bg-dark py-20 px-6 md:px-20 border-t border-gray-800/50 overflow-hidden">
+            
+            {/* Horizontal Branch Line (Spreads Left & Right at the top) */}
+            <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-800/30 z-0">
+                <motion.div 
+                    style={{ scaleX }}
+                    className="w-full h-full bg-linear-to-r from-transparent via-secondary to-transparent origin-center shadow-[0_0_20px_rgba(0,240,255,0.8)]"
+                />
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
                 
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -70,7 +88,7 @@ const Certifications = () => {
                         Professional <span className="text-primary">Certifications</span>
                     </h2>
                     <p className="text-gray-400 max-w-xl mx-auto md:mx-0">
-                        Validasi kemampuan akademis dan teknikal melalui course & lisensi yang diselenggarakan oleh institusi terkemuka.
+                        Validating academic and technical capabilities through courses & licenses held by leading institutions.
                     </p>
                 </motion.div>
 
