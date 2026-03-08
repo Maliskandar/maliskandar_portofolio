@@ -1,189 +1,3 @@
-// "use client";
-
-// import React, { useState } from 'react';
-// import { motion } from 'framer-motion';
-// import { FiDatabase, FiServer, FiGlobe, FiLock, FiTerminal, FiPlay } from 'react-icons/fi';
-// import { SiNodedotjs, SiMongodb, SiExpress } from 'react-icons/si';
-
-// const BackendSpotlight = () => {
-//     const [isSimulating, setIsSimulating] = useState(false);
-//     const [logs, setLogs] = useState<string[]>(["> Server ready on port 3000...", "> Waiting for requests..."]);
-
-//     // Fungsi untuk menjalankan simulasi Request
-//     const runSimulation = () => {
-//         if (isSimulating) return;
-//         setIsSimulating(true);
-//         setLogs(["> Server ready on port 3000...", "> Waiting for requests..."]);
-
-//         // Jadwal log muncul bertahap
-//         const steps = [
-//             { msg: "> [INFO] Incoming GET /api/users request", delay: 500 },
-//             { msg: "> [AUTH] Verifying JWT Token...", delay: 1500 },
-//             { msg: "> [AUTH] Token Valid. User ID: 8821", delay: 2500 },
-//             { msg: "> [DB] Querying MongoDB collection 'users'", delay: 3500 },
-//             { msg: "> [SUCCESS] Data retrieved. Sending 200 OK", delay: 4500 },
-//         ];
-
-//         steps.forEach(({ msg, delay }) => {
-//             setTimeout(() => {
-//                 setLogs((prev) => [...prev, msg]);
-//             }, delay);
-//         });
-
-//         setTimeout(() => setIsSimulating(false), 5500);
-//     };
-
-//     return (
-//         <section className="w-full py-20 bg-dark relative overflow-hidden text-white">
-//             {/* Background Grid Decoration */}
-//             <div className="absolute inset-0 opacity-10"
-//                 style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-//             </div>
-
-//             <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10">
-
-//                 {/* Header */}
-//                 <div className="mb-12">
-//                     <h2 className="text-3xl md:text-4xl font-bold mb-4">
-//                         Di Balik <span className="text-secondary">Layar</span>
-//                     </h2>
-//                     <p className="text-gray-400 max-w-2xl">
-//                         Arsitektur backend yang aman dan scalable. Menggunakan Node.js untuk menangani logika bisnis,
-//                         autentikasi JWT, dan komunikasi database yang efisien.
-//                     </p>
-//                 </div>
-
-//                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-
-//                     {/* Kolom Kiri: Visualisasi Diagram */}
-//                     <div className="bg-card/50 backdrop-blur-sm border border-gray-700 rounded-xl p-8 relative min-h-[400px] flex flex-col justify-between">
-//                         {/* Label Arsitektur */}
-//                         <div className="absolute top-4 left-4 text-xs font-mono text-gray-500 uppercase tracking-widest">
-//                             System Architecture v1.0
-//                         </div>
-
-//                         {/* Diagram Flow */}
-//                         <div className="flex flex-col gap-8 mt-8">
-
-//                             {/* Node 1: Client */}
-//                             <div className="flex items-center gap-4 relative">
-//                                 <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center border border-blue-500 text-blue-400">
-//                                     <FiGlobe size={24} />
-//                                 </div>
-//                                 <div className="flex-1">
-//                                     <h4 className="font-bold text-sm">Client (React)</h4>
-//                                     <p className="text-xs text-gray-400">Initiates Request</p>
-//                                 </div>
-//                             </div>
-
-//                             {/* Connector Line 1 */}
-//                             <div className="h-10 border-l-2 border-dashed border-gray-700 ml-6 relative">
-//                                 {/* Moving Dot Animation (Request) */}
-//                                 {isSimulating && (
-//                                     <motion.div
-//                                         className="absolute -left-[5px] w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_#00F0FF]"
-//                                         animate={{ top: [0, 40], opacity: [1, 0] }}
-//                                         transition={{ duration: 1, delay: 0 }}
-//                                     />
-//                                 )}
-//                             </div>
-
-//                             {/* Node 2: Server & Auth */}
-//                             <div className="flex items-center gap-4">
-//                                 <div className="w-12 h-12 bg-green-600/20 rounded-lg flex items-center justify-center border border-green-500 text-green-400">
-//                                     <SiNodedotjs size={24} />
-//                                 </div>
-//                                 <div className="flex-1">
-//                                     <h4 className="font-bold text-sm flex items-center gap-2">
-//                                         Node.js Server <span className="text-xs bg-gray-800 px-2 py-0.5 rounded text-secondary border border-secondary/30">Express</span>
-//                                     </h4>
-//                                     <p className="text-xs text-gray-400 flex items-center gap-1">
-//                                         <FiLock size={10} /> JWT Middleware Verification
-//                                     </p>
-//                                 </div>
-//                             </div>
-
-//                             {/* Connector Line 2 */}
-//                             <div className="h-10 border-l-2 border-dashed border-gray-700 ml-6 relative">
-//                                 {isSimulating && (
-//                                     <motion.div
-//                                         className="absolute -left-[5px] w-3 h-3 bg-secondary rounded-full shadow-[0_0_10px_#B026FF]"
-//                                         animate={{ top: [0, 40], opacity: [1, 0] }}
-//                                         transition={{ duration: 1, delay: 1.5 }}
-//                                     />
-//                                 )}
-//                             </div>
-
-//                             {/* Node 3: Database */}
-//                             <div className="flex items-center gap-4">
-//                                 <div className="w-12 h-12 bg-emerald-600/20 rounded-lg flex items-center justify-center border border-emerald-500 text-emerald-400">
-//                                     <SiMongodb size={24} />
-//                                 </div>
-//                                 <div className="flex-1">
-//                                     <h4 className="font-bold text-sm">Database</h4>
-//                                     <p className="text-xs text-gray-400">Aggregation & Filtering</p>
-//                                 </div>
-//                             </div>
-
-//                         </div>
-
-//                         {/* Tombol Simulasi */}
-//                         <button
-//                             onClick={runSimulation}
-//                             disabled={isSimulating}
-//                             className={`mt-8 w-full py-3 rounded-lg font-mono text-sm flex items-center justify-center gap-2 transition-all
-//                   ${isSimulating ? 'bg-gray-700 cursor-not-allowed text-gray-400' : 'bg-primary/20 text-primary border border-primary hover:bg-primary hover:text-dark'}
-//                 `}
-//                         >
-//                             {isSimulating ? 'Processing Request...' : <><FiPlay /> Run API Simulation</>}
-//                         </button>
-//                     </div>
-
-//                     {/* Kolom Kanan: Terminal Logs */}
-//                     <div className="bg-[#0c0c0c] border border-gray-800 rounded-xl p-6 font-mono text-xs md:text-sm h-[450px] overflow-y-auto shadow-2xl relative">
-//                         {/* Terminal Header */}
-//                         <div className="flex items-center gap-2 mb-4 border-b border-gray-800 pb-2">
-//                             <div className="w-3 h-3 rounded-full bg-red-500"></div>
-//                             <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-//                             <div className="w-3 h-3 rounded-full bg-green-500"></div>
-//                             <span className="ml-2 text-gray-500">server-logs — bash</span>
-//                         </div>
-
-//                         {/* Logs Content */}
-//                         <div className="space-y-2">
-//                             {logs.map((log, i) => (
-//                                 <motion.div
-//                                     key={i}
-//                                     initial={{ opacity: 0, x: -10 }}
-//                                     animate={{ opacity: 1, x: 0 }}
-//                                     className={`${log.includes('[ERROR]') ? 'text-red-400' : log.includes('[SUCCESS]') ? 'text-green-400' : log.includes('[AUTH]') ? 'text-secondary' : 'text-gray-300'}`}
-//                                 >
-//                                     {log}
-//                                 </motion.div>
-//                             ))}
-//                             {isSimulating && (
-//                                 <motion.div
-//                                     animate={{ opacity: [0, 1, 0] }}
-//                                     transition={{ repeat: Infinity, duration: 0.8 }}
-//                                     className="w-2 h-4 bg-gray-500 inline-block align-middle ml-1"
-//                                 />
-//                             )}
-//                         </div>
-
-//                         <div className="absolute bottom-4 right-4 text-gray-700 text-[10px]">
-//                             Node.js v18.16.0
-//                         </div>
-//                     </div>
-
-//                 </div>
-//             </div>
-//         </section>
-//     );
-// };
-
-// export default BackendSpotlight;
-
-// ini punya php
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -203,6 +17,7 @@ type Star = {
 
 const BackendSpotlight = () => {
     const [isSimulating, setIsSimulating] = useState(false);
+    const [hasRun, setHasRun] = useState(false);
     const [logs, setLogs] = useState<string[]>(["> php artisan serve", "> Server running on 127.0.0.1:8000"]);
 
     // State untuk menampung data bintang
@@ -228,6 +43,7 @@ const BackendSpotlight = () => {
     const runSimulation = () => {
         if (isSimulating) return;
         setIsSimulating(true);
+        setHasRun(true);
         setLogs(["> php artisan serve", "> Waiting for requests..."]);
 
         // Jadwal log ala Laravel
@@ -303,7 +119,13 @@ const BackendSpotlight = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
 
                     {/* Kolom Kiri: Visualisasi Diagram MVC */}
-                    <div className="bg-card/30 backdrop-blur-md border border-gray-700/50 rounded-xl p-8 relative flex flex-col justify-between min-h-[500px]">
+                    <motion.div 
+                        onViewportEnter={() => {
+                            if (!hasRun) runSimulation();
+                        }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        className="bg-card/30 backdrop-blur-md border border-gray-700/50 rounded-xl p-8 relative flex flex-col justify-between min-h-[500px]"
+                    >
                         {/* Label Arsitektur */}
                         <div className="absolute top-4 left-4 text-xs font-mono text-gray-500 uppercase tracking-widest flex items-center gap-2">
                             <SiLaravel className="text-red-500" /> Laravel System Flow
@@ -312,8 +134,22 @@ const BackendSpotlight = () => {
                         {/* Diagram Flow */}
                         <div className="flex flex-col gap-6 mt-8 relative">
 
-                            {/* Garis Vertikal Penghubung (Background Line) */}
-                            <div className="absolute left-[23px] top-8 bottom-8 w-0.5 bg-gray-700 border-l border-dashed border-gray-600"></div>
+                            {/* Garis Vertikal Penghubung (Animated SVG Line) */}
+                            <svg className="absolute left-[20px] top-8 bottom-8 w-2 h-[calc(100%-4rem)] z-0" overflow="visible">
+                                <motion.line
+                                    x1="4"
+                                    y1="0"
+                                    x2="4"
+                                    y2="100%"
+                                    stroke="#4b5563"
+                                    strokeWidth="2"
+                                    strokeDasharray="6 6"
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    viewport={{ once: true, amount: 0.5 }}
+                                    transition={{ duration: 2, ease: "easeOut" }}
+                                />
+                            </svg>
 
                             {/* Node 1: Route */}
                             <div className="flex items-center gap-4 relative z-10">
@@ -395,7 +231,7 @@ const BackendSpotlight = () => {
                         >
                             {isSimulating ? 'Processing Request...' : <><FiPlay /> Run Laravel Request</>}
                         </button>
-                    </div>
+                    </motion.div>
 
                     {/* Kolom Kanan: Terminal Logs */}
                     <div className="bg-[#0c0c0c]/90 backdrop-blur-md border border-gray-800 rounded-xl p-6 font-mono text-xs md:text-sm h-full max-h-[500px] overflow-y-auto shadow-2xl relative flex flex-col z-20">

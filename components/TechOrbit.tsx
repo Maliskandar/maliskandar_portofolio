@@ -42,20 +42,26 @@ const TechOrbit = () => {
     return (
         <section id="stack" className="relative w-full min-h-screen bg-dark overflow-hidden flex flex-col items-center justify-center py-20">
 
-            {/* Judul Section */}
+            {/* Section Title */}
             <div className="absolute top-10 text-center z-10 px-4">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Tech Ecosystem</h2>
-                <p className="text-gray-400 font-mono text-sm">Gabungan kekuatan Laravel & Modern Stack.</p>
+                <p className="text-gray-400 font-mono text-sm">Empowered by Laravel & Modern Stack.</p>
             </div>
 
-            {/* Container Utama Orbit */}
-            <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] flex items-center justify-center mt-10 md:mt-20">
+            {/* Main Orbit Container */}
+            <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] flex items-center justify-center mt-10 md:mt-20"
+            >
 
-                {/* Lingkaran Orbit (Garis Tipis) */}
+                {/* Orbit Rings (Thin Lines) */}
                 <div className="absolute w-full h-full border border-gray-700/50 rounded-full"></div>
-                <div className="absolute w-[65%] h-[65%] border border-gray-700/30 rounded-full"></div>
+                <div className="absolute top-1/2 left-1/2 w-[65%] h-[65%] -translate-x-1/2 -translate-y-1/2 border border-gray-700/30 rounded-full"></div>
 
-                {/* Inti (Center Core) - Berubah saat Hover */}
+                {/* Center Core - Changes on Hover */}
                 <div className="relative z-20 w-32 h-32 md:w-48 md:h-48 bg-card/80 backdrop-blur-md border border-gray-600 rounded-full flex flex-col items-center justify-center text-center p-4 transition-all duration-300 shadow-[0_0_30px_rgba(0,240,255,0.1)]">
                     {activeTech ? (
                         <motion.div
@@ -73,7 +79,7 @@ const TechOrbit = () => {
                         <div className="flex flex-col items-center animate-pulse">
                             <span className="text-3xl md:text-5xl mb-2">⚛️</span>
                             <h3 className="text-white font-bold text-sm md:text-lg">Full Stack</h3>
-                            <p className="text-gray-500 text-[10px] md:text-xs text-center px-2">Hover ikon di orbit</p>
+                            <p className="text-gray-500 text-[10px] md:text-xs text-center px-2">Hover orbit icons</p>
                         </div>
                     )}
                 </div>
@@ -95,21 +101,21 @@ const TechOrbit = () => {
                                 onMouseEnter={() => setActiveTech(tech)}
                                 onMouseLeave={() => setActiveTech(null)}
                             >
-                                {/* CSS Variable untuk Radius Responsif */}
+                                {/* Responsive Radius CSS Variable */}
                                 <style jsx>{`
                   div {
-                    --orbit-radius: 170px; /* HP */
+                    --orbit-radius: 170px; /* Mobile */
                   }
                   @media (min-width: 768px) {
                     div {
-                      --orbit-radius: 300px; /* Laptop (Lebih lebar karena item banyak) */
+                      --orbit-radius: 300px; /* Laptop */
                     }
                   }
                 `}</style>
 
-                                {/* Item Ikon */}
+                                {/* Icon Item */}
                                 <div
-                                    className="w-full h-full bg-card border border-gray-600 rounded-full flex items-center justify-center text-xl md:text-3xl hover:scale-125 hover:border-primary transition-all duration-300 shadow-lg animate-reverse-spin group-hover:pause-animation"
+                                    className="w-full h-full bg-card border border-gray-600 rounded-full flex items-center justify-center text-xl md:text-3xl hover:scale-110 hover:border-primary transition-all duration-300 shadow-lg animate-reverse-spin group-hover:pause-animation"
                                     style={{ color: tech.color }}
                                 >
                                     {tech.icon}
@@ -118,7 +124,7 @@ const TechOrbit = () => {
                         );
                     })}
                 </div>
-            </div>
+            </motion.div>
 
         </section>
     );

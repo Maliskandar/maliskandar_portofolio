@@ -1,0 +1,115 @@
+﻿PDF_TEXT_START
+
+
+MUHAMMAD AKMAL ISKANDAR
+SUMMARY
+WORK EXPERIENCE
+Built a  web-based  application  for  office  guard  management  to  improve  the  efficiency  of  personnel
+monitoring.
+Implemented the solution using Laravel technology to streamline internal office operations.
+Software Engineer | Intern
+January 2024 ΓÇô February 2024
++62 853-2899-3486 | sao19082002@gmail.com | Tegal, Indonesia | 52465
+Github: Maliskandar | Linkedin: Muhammad Akmal Iskandar | maliskandar-portofolio.vercel.app
+Adaptable Informatics graduate with hands-on experience in Full-Stack Web Development. Strong expertise in
+backend  engineering  using  Laravel  and  MySQL,  demonstrated  through  the  development  of  complex
+management  systems  for  government  and  healthcare  sectors.  Proficient  in  modern  frontend  ecosystems,
+utilizing Next.js, React, and Tailwind CSS to build responsive, high-performance user interfaces. Committed
+to writing clean, maintainable code and continuously learning new technologies to deliver scalable digital
+solutions.
+COURSES & CERTIFICATIONS
+UI-UX | Build with Angga
+ August 2022
+Web Developer | Intern
+Updated and maintained the department website using WordPress technology.
+Collaborated with cross-functional teams to enhance project delivery and website performance.
+February 2025 ΓÇô April 2025
+Full-Stack Web Developer | Intern 
+Developed a web-based application to facilitate patient management and Electronic Medical Records
+(EMR). 
+Assisted in managing and digitizing patient data to improve administrative efficiency. 
+April 2025 ΓÇô August 2025
+Diponegoro Big Data School | Diponegoro University
+November 2021
+Oracle Primavera P6 Professional Project | Oracle Academy
+April 2024
+Memulai Dasar Pemrograman untuk Menjadi Pengembang Software | Dicoding
+February 2024
+Database Programming with SQL | Oracle Academy
+March 2023
+PL/SQL Database Programming | Oracle Academy
+May 2023
+Belajar Pengembangan Aplikasi Android Intermediate | Dicoding
+June 2024
+Independent Midwife Practice | Bidan Delima
+Tegal - Indonesia
+Master of Information Systems | Diponegoro University
+Semarang - Indonesia
+Ministry of Investment | BKPM.
+Jakarta Selatan - Indonesia
+EDUCATION
+Bachelor of Informatics | GPA: 3.14 / 4.00 
+Relevant Coursework: Software Engineering, Software Architecture Design, Basic Programming, Data
+Structures, and Computational Mathematics.
+Focus: Web-based application development and technical computer science fundamentals.
+August 2021 ΓÇô August 2025
+Semarang - IndonesiaDiponegoro University
+
+SKILLS
+Laravel 
+Node.js
+React.js
+Next.js
+Tailwind CSS
+Bootstrap
+GitHub
+Rest API
+MySQL
+PostgreSQL
+Figma
+TypeScript
+PROJECTS
+The system was developed using the Laravel framework and MySQL database, with key features including
+patient data management, medical record entry, prescription and billing generation, and multi-format
+report printing.
+System testing was conducted using the Black Box method to ensure all functions meet user requirements.
+Electronic Medical Records (EMR) Web-Based Application
+HTML
+CSS
+JavaScript
+PHP
+UI / UX Design with Figma: Build E-Wallet Apps
+Designed a complete E-Wallet mobile app UI/UX from scratch using Figma, applying user-centered design
+principles.
+Developed a strong understanding of UI/UX fundamentals, including user flow, layout hierarchy, and
+usability best practices.
+Built a portfolio-ready project under the guidance of an experienced mentor, focusing on real-world
+UI/UX implementation.
+Developed a high-performance landing page using Next.js and TypeScript, ensuring strong type safety and
+code maintainability.
+Implemented a fully responsive UI/UX with Tailwind CSS, optimizing the layout for mobile and desktop
+users.
+Focused on performance optimization and SEO structure to enhance the digital presence of the F&B
+business.
+Live Demo: nihlohcafe.vercel.app
+Nihloh Coffee & Eatery Landing Page
+Engineered a dynamic portfolio platform utilizing Next.js (React Framework) with TypeScript for a robust
+and scalable architecture.
+Designed modular and reusable React components to streamline development and future updates.
+Deployed via Vercel with continuous integration, ensuring seamless updates and high availability.
+Live Demo: architech-portofolio.vercel.app
+Architech Portfolio Platform
+Office Sentry is a comprehensive management system designed to enhance the operational efficiency of
+office boys within an organization. 
+Implemented  the  solution  using  Laravel  and  Tailwind  CSS  technology  to  streamline  internal  office
+operations
+Office Sentry Web Based Application
+Noiia Studio - Creative Agency Website
+Engineered an immersive digital experience for a creative studio using Next.js and TypeScript, ensuring a
+robust and type-safe codebase.
+Crafted a pixel-perfect, minimalist user interface with Tailwind CSS, focusing on smooth interactions and
+modern aesthetics.
+Optimized image rendering and layout shifts (CLS) to deliver a high-performance portfolio showcase with
+excellent SEO scores.
+Live Demo: noiia-studio.vercel.app
+PDF_TEXT_END

@@ -2,6 +2,9 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
+import LenisProvider from "@/components/LenisProvider";
+import ScrollProgress from "@/components/ScrollProgress";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const firaCode = Fira_Code({ subsets: ["latin"], variable: "--font-fira" });
@@ -17,13 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       {/* TAMBAHKAN suppressHydrationWarning={true} DI BAWAH INI */}
       <body
         suppressHydrationWarning={true}
         className={`${inter.variable} ${firaCode.variable} bg-dark text-white antialiased`}
       >
-        {children}
+        <LenisProvider>
+          <ScrollProgress />
+          <CustomCursor />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
