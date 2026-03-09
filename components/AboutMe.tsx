@@ -15,9 +15,9 @@ const experiences = [
     {
         id: 2,
         role: "Web Developer Intern",
-        company: "Ministry of Investment | BKPM",
+        company: "Master of Information Systems | Diponegoro University",
         date: "Feb 2025 – Apr 2025",
-        desc: "Updated and maintained department website using WordPress. Collaborated with cross-functional teams.",
+        desc: "Updated and maintained the department website using WordPress technology. Collaborated with cross-functional teams to enhance project delivery and website performance.",
     },
     {
         id: 3,
@@ -121,12 +121,12 @@ const AboutMe = () => {
                         </div>
 
                         <div className="relative ml-2 md:ml-4 space-y-12 pb-4">
-                            
+
                             {/* Vertical Line for About Me */}
                             <div ref={lineRef} className="absolute left-0 top-2 -bottom-24 md:-bottom-32 w-0.5 bg-gray-800/30 origin-top z-0">
-                                <motion.div 
-                                    style={{ scaleY: scrollYProgress }} 
-                                    className="w-full h-full bg-linear-to-b from-primary via-secondary to-primary origin-top shadow-[0_0_15px_rgba(0,240,255,0.6)]" 
+                                <motion.div
+                                    style={{ scaleY: scrollYProgress }}
+                                    className="w-full h-full bg-linear-to-b from-primary via-secondary to-primary origin-top shadow-[0_0_15px_rgba(0,240,255,0.6)]"
                                 />
                             </div>
 

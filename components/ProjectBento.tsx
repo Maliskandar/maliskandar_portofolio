@@ -31,7 +31,7 @@ const projects: Project[] = [
         desc: "Modern digital wallet application design focusing on seamless money transfers and top-ups.",
         stack: [<SiFigma key="f" />],
         span: "md:col-span-1 md:row-span-1",
-        bg: "bg-[#1E1E2E] hover:bg-[#252538]",
+        bg: "bg-gradient-to-br from-cyan-400/40 to-slate-900",
         image: "/projects/wallet-mobile.png", // Keep original images if any, fallback handles missing
         galleryImages: ["/projects/wallet-mobile.png"],
         features: ["Intuitive User Flow", "Light & Dark Mode", "Interactive Prototyping"],
@@ -40,15 +40,17 @@ const projects: Project[] = [
     },
     {
         id: 2,
-        title: "E-Commerce Dashboard",
-        category: "Web Application",
-        desc: "Comprehensive admin dashboard for managing products, orders, and customer analytics in real-time.",
-        stack: [<SiReact key="r" />, <SiTailwindcss key="t" />, <SiNodedotjs key="n" />],
+        title: "Nihloh Coffee & Eatery",
+        category: "Landing Page",
+        desc: "High-performance landing page for F&B business focusing on SEO and responsive design.",
+        stack: [<SiNextdotjs key="nx" />, <SiTypescript key="ts" />, <SiTailwindcss key="t" />],
         span: "md:col-span-2 md:row-span-1",
-        bg: "bg-gradient-to-br from-indigo-900/40 to-slate-900",
-        // No image = fallback to watermark icon
-        features: ["Real-time Sales Charts", "Inventory Management", "Role-based Access Control"],
-        techDetails: "Built using React and Recharts for data visualization, backed by a robust Node.js REST API."
+        bg: "bg-gradient-to-br from-orange-700/40 to-slate-900",
+        image: "/projects/nihloh-1.png",
+        galleryImages: ["/projects/nihloh-1.png", "/projects/nihloh-2.png", "/projects/nihloh-3.png"],
+        features: ["Fully Responsive UI/UX", "Performance & SEO Optimized", "Strong Type Safety"],
+        techDetails: "Developed a high-performance landing page using Next.js and TypeScript, with Tailwind CSS for layout optimizations.",
+        externalLink: "https://nihlohcafe.vercel.app"
     },
     {
         id: 3,
@@ -57,9 +59,9 @@ const projects: Project[] = [
         desc: "Electronic medical records and patient management system for independent midwife practices.",
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-2 md:row-span-2",
-        bg: "bg-gradient-to-br from-blue-900/80 to-slate-900",
+        bg: "bg-gradient-to-br from-pink-900/80 to-slate-900",
         image: "/projects/emr-thumb.png",
-        galleryImages: ["/projects/emr-thumb.png", "/projects/emr-1.png", "/projects/emr-2.png"],
+        galleryImages: ["/projects/emr-1.png", "/projects/emr-2.png", "/projects/emr-3.png"],
         techDetails: "Built on Laravel 10 using MVC architecture. Normalized MySQL database handles thousands of patient records efficiently.",
         features: [
             "Patient & Medical Record Management",
@@ -70,14 +72,17 @@ const projects: Project[] = [
     },
     {
         id: 4,
-        title: "TaskFlow Manager",
-        category: "Productivity Tool",
-        desc: "A Kanban-style task management application with real-time collaboration features.",
-        stack: [<SiNextdotjs key="nx" />, <SiTypescript key="ts" />, <SiMongodb key="mdb" />],
+        title: "Noiia Studio",
+        category: "Creative Agency Website",
+        desc: "Immersive digital experience showcasing modern aesthetics and smooth interactions.",
+        stack: [<SiNextdotjs key="nx" />, <SiTypescript key="ts" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-tr from-emerald-900/40 to-dark",
-        features: ["Drag and Drop Kanban Board", "Real-time Updates via WebSockets", "Team Workspaces"],
-        techDetails: "Utilizes Next.js App Router with Server Actions and MongoDB for seamless serverless data fetching."
+        image: "/projects/photo-studio-1.png",
+        galleryImages: ["/projects/photo-studio-1.png", "/projects/photo-studio-2.png", "/projects/photo-studio-3.png"],
+        features: ["Pixel-perfect Minimalist UI", "Smooth Interactions", "Optimized Image Rendering & CLS"],
+        techDetails: "Engineered using Next.js and TypeScript, focused on high-performance rendering and modern aesthetics.",
+        externalLink: "https://noiia-studio.vercel.app"
     },
     {
         id: 5,
@@ -104,11 +109,11 @@ const ProjectBento = () => {
 
     return (
         <section id="work" className="relative w-full min-h-screen bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50">
-            
+
             {/* Header */}
             <div className="max-w-7xl mx-auto mb-16 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
                 <div>
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -116,7 +121,7 @@ const ProjectBento = () => {
                     >
                         // Portfolio
                     </motion.p>
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -126,7 +131,7 @@ const ProjectBento = () => {
                         Selected Works.
                     </motion.h2>
                 </div>
-                <motion.p 
+                <motion.p
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -138,7 +143,7 @@ const ProjectBento = () => {
             </div>
 
             {/* BENTO GRID */}
-            <motion.div 
+            <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
@@ -160,9 +165,9 @@ const ProjectBento = () => {
             {/* PROJECT MODAL */}
             <AnimatePresence>
                 {selectedProject && (
-                    <ProjectModal 
-                        project={selectedProject} 
-                        onClose={() => setSelectedProject(null)} 
+                    <ProjectModal
+                        project={selectedProject}
+                        onClose={() => setSelectedProject(null)}
                     />
                 )}
             </AnimatePresence>
@@ -189,7 +194,7 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
 
             {/* Content Container */}
             <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">
-                
+
                 {/* Top Tags */}
                 <div className="flex justify-between items-start">
                     <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-xs font-medium tracking-wide text-gray-300 border border-white/5">
@@ -208,7 +213,7 @@ const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => vo
                     <p className="text-gray-300 text-sm md:text-base line-clamp-2 md:line-clamp-3 mb-5 max-w-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 hidden md:block">
                         {project.desc}
                     </p>
-                    
+
                     {/* Tech Stack Bar */}
                     <div className="flex items-center gap-3 text-xl text-gray-400">
                         {project.stack.map((icon, i) => (
@@ -246,7 +251,7 @@ const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velo
 
 const ProjectModal = ({ project, onClose }: { project: Project, onClose: () => void }) => {
     const [[page, direction], setPage] = useState([0, 0]);
-    
+
     // Prevent body scroll when modal opens
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -285,7 +290,7 @@ const ProjectModal = ({ project, onClose }: { project: Project, onClose: () => v
                 </button>
 
                 <div className="overflow-y-auto w-full h-full text-white">
-                    
+
                     {/* Header Image Slider */}
                     <div className="w-full h-[250px] md:h-[450px] relative flex items-center justify-center bg-gray-900 group overflow-hidden">
                         {activeImages.length === 0 ? (
@@ -338,7 +343,7 @@ const ProjectModal = ({ project, onClose }: { project: Project, onClose: () => v
                     {/* Content Details */}
                     <div className="p-6 md:p-12 md:-mt-10 relative z-20">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                            
+
                             {/* Main Info */}
                             <div className="lg:col-span-2 space-y-6">
                                 <div>
@@ -348,7 +353,7 @@ const ProjectModal = ({ project, onClose }: { project: Project, onClose: () => v
                                 <p className="text-gray-300 text-lg leading-relaxed text-justify">
                                     {project.desc}
                                 </p>
-                                
+
                                 {project.techDetails && (
                                     <div className="mt-8 p-6 bg-gray-900 border border-gray-800 rounded-2xl">
                                         <h4 className="text-white font-bold mb-3">Technical Overview</h4>
