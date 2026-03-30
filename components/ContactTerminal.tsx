@@ -35,7 +35,7 @@ const ContactTerminal = () => {
     const startBootSequence = () => {
         if (bootPhase !== 'idle') return;
         setBootPhase('booting');
-        
+
         const messages = [
             "SYSTEM KERNEL INITIALIZED...",
             "LOADING MODULE: CONTACT_FORM.sh... [OK]",
@@ -101,7 +101,7 @@ const ContactTerminal = () => {
                 </div>
 
                 {/* Terminal Window */}
-                <motion.div 
+                <motion.div
                     onViewportEnter={startBootSequence}
                     viewport={{ once: true, amount: 0.5 }}
                     className="w-full bg-[#0d1117] rounded-lg border border-gray-700 shadow-2xl overflow-hidden font-mono text-sm md:text-base relative"
@@ -215,7 +215,7 @@ const ContactTerminal = () => {
                     </p>
                     <div className="flex gap-6 mt-4 md:mt-0">
                         <a href="https://github.com/Maliskandar" target='blank' className="hover:text-white transition-colors"><FiGithub size={20} /></a>
-                        <a href="https://www.linkedin.com/in/muhammad-akmal-iskandar-94aa8b242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target='blank' className="hover:text-white transition-colors"><FiLinkedin size={20} /></a>
+                        <a href="https://www.linkedin.com/in/muhammad-akmal-iskandar-94aa8b242/" target='blank' className="hover:text-white transition-colors"><FiLinkedin size={20} /></a>
                         <a href="https://www.instagram.com/maliskandar_19/" target='blank' className="hover:text-white transition-colors"><FiInstagram size={20} /></a>
                     </div>
                 </footer>
