@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiExternalLink, FiX, FiLayers, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiExternalLink, FiX, FiLayers, FiChevronLeft, FiChevronRight, FiArrowDown } from 'react-icons/fi';
 import Image from 'next/image';
 import { Project } from '@/data/projects';
 
@@ -26,6 +26,7 @@ const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velo
 
 export default function ProjectModal({ project, onClose }: { project: Project, onClose: () => void }) {
     const [[page, direction], setPage] = useState([0, 0]);
+    const [hasScrolled, setHasScrolled] = useState(false);
 
     // Prevent body scroll when modal opens
     useEffect(() => {
@@ -33,14 +34,12 @@ export default function ProjectModal({ project, onClose }: { project: Project, o
         return () => { document.body.style.overflow = 'unset'; };
     }, []);
 
+    useEffect(() => {
+        setHasScrolled(false);
+    }, [page]);
+
     const activeImages = project.galleryImages?.length ? project.galleryImages : (project.image ? [project.image] : []);
     const imageIndex = Math.abs(page % activeImages.length);
-
-    useEffect(() => {
-        if (activeImages.length <= 1) return;
-        const interval = setInterval(() => setPage([page + 1, 1]), 4000);
-        return () => clearInterval(interval);
-    }, [activeImages.length, page]);
 
     const paginate = (newDirection: number) => setPage([page + newDirection, newDirection]);
 
@@ -59,12 +58,12 @@ export default function ProjectModal({ project, onClose }: { project: Project, o
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-50 p-2.5 bg-black/50 backdrop-blur rounded-full hover:bg-white hover:text-black transition-colors text-white border border-white/10"
+                    className="absolute top-4 right-6 md:right-8 z-50 p-2.5 bg-black/50 backdrop-blur rounded-full hover:bg-white hover:text-black transition-colors text-white border border-white/10 shadow-lg"
                 >
                     <FiX size={20} />
                 </button>
 
-                <div className="overflow-y-auto w-full h-full text-white">
+                <div className="overflow-y-auto w-full h-full text-white custom-scrollbar">
 
                     {/* Header Image Slider */}
                     <div className="w-full h-[250px] md:h-[450px] relative flex items-center justify-center bg-gray-900 group overflow-hidden">
@@ -77,6 +76,11 @@ export default function ProjectModal({ project, onClose }: { project: Project, o
                             <>
                                 <AnimatePresence initial={false} custom={direction}>
                                     <motion.div
+                                        id="scrollable-image-container"
+                                        onScroll={(e) => {
+                                            if (e.currentTarget.scrollTop > 50) setHasScrolled(true);
+                                            else setHasScrolled(false);
+                                        }}
                                         key={page}
                                         custom={direction} variants={slideVariants}
                                         initial="enter" animate="center" exit="exit"
@@ -89,14 +93,14 @@ export default function ProjectModal({ project, onClose }: { project: Project, o
                                         }}
                                         className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar"
                                     >
-                                        <Image 
-                                            src={activeImages[imageIndex]} 
-                                            alt={project.title} 
-                                            width={0} 
-                                            height={0} 
+                                        <Image
+                                            src={activeImages[imageIndex]}
+                                            alt={project.title}
+                                            width={0}
+                                            height={0}
                                             sizes="100vw"
-                                            className="w-full h-auto min-h-full object-cover object-top block" 
-                                            draggable={false} 
+                                            className="w-full h-auto min-h-full object-cover object-top block"
+                                            draggable={false}
                                         />
                                     </motion.div>
                                 </AnimatePresence>
@@ -119,8 +123,26 @@ export default function ProjectModal({ project, onClose }: { project: Project, o
                                 )}
                             </>
                         )}
-                        {/* Overlay Gradient Soft */}
-                        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0f1115] to-transparent z-10 pointer-events-none" />
+                        {/* Overlay Gradient Soft and Scroll CTA */}
+                        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0f1115] via-[#0f1115]/80 to-transparent z-40 pointer-events-none flex flex-col justify-end items-center pb-8">
+                            <AnimatePresence>
+                                {!hasScrolled && activeImages.length > 0 && (
+                                    <motion.button 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        onClick={() => {
+                                            const el = document.getElementById("scrollable-image-container");
+                                            if (el) el.scrollBy({ top: 350, behavior: 'smooth' });
+                                        }}
+                                        className="pointer-events-auto flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white/90 px-5 py-2.5 rounded-full text-xs font-bold tracking-widest hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] animate-bounce"
+                                    >
+                                        <FiArrowDown size={16} />
+                                        <span>SCROLL GAMBAR</span>
+                                    </motion.button>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
 
                     {/* Content Details */}

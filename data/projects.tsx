@@ -44,7 +44,7 @@ export const allProjects: Project[] = [
         span: "md:col-span-2 md:row-span-1",
         bg: "bg-gradient-to-br from-orange-700/40 to-slate-900",
         image: "/projects/nihloh-1.png",
-        galleryImages: ["/projects/nihloh-1.png", "/projects/nihloh-2.png", "/projects/nihloh-3.png"],
+        galleryImages: ["/img/NihlohLandingpage.png"],
         features: ["Fully Responsive UI/UX", "Performance & SEO Optimized", "Strong Type Safety"],
         techDetails: "Developed a high-performance landing page using Next.js and TypeScript, with Tailwind CSS for layout optimizations.",
         externalLink: "https://nihlohcafe.vercel.app"
@@ -52,7 +52,7 @@ export const allProjects: Project[] = [
     {
         id: 3,
         title: "Electronic Medical Records",
-        category: "Web Development",
+        category: "Full-Stack Development",
         desc: "Electronic medical records and patient management system for independent midwife practices.",
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-2 md:row-span-2",
@@ -76,13 +76,31 @@ export const allProjects: Project[] = [
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-tr from-emerald-900/40 to-dark",
         image: "/projects/photo-studio-1.png",
-        galleryImages: ["/projects/photo-studio-1.png", "/projects/photo-studio-2.png", "/projects/photo-studio-3.png"],
+        galleryImages: ["/img/NoiaLandingpage.png"],
         features: ["Pixel-perfect Minimalist UI", "Smooth Interactions", "Optimized Image Rendering & CLS"],
         techDetails: "Engineered using Next.js and TypeScript, focused on high-performance rendering and modern aesthetics.",
         externalLink: "https://noiia-studio.vercel.app"
     },
     {
         id: 5,
+        title: "CV Satya Perkasa Mobilindo",
+        category: "Front-End Development",
+        desc: "Official digital showroom and dealership website for Suzuki Indonesia.",
+        stack: [<SiLaravel key="l" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-1 md:row-span-1",
+        bg: "bg-[#111827] hover:bg-[#1F2937]",
+        image: "/img/Landingpage.png",
+        galleryImages: ["/img/Landingpage.png", "/img/Detail Mobil 2.png", "/img/Login.png", "/img/Booking Services.png", "/img/Booking Test Drive.png", "/img/Dashboard Admin.png"],
+        techDetails: "A comprehensive automotive dealership platform built covering Suzuki passenger and commercial vehicles. It features role-based access control, allowing users to book services and schedule test drives, while providing an admin dashboard to manage inquiries.",
+        features: [
+            "Interactive Vehicle Digital Showroom",
+            "Online Test Drive & Service Booking",
+            "Role-based Dashboard (Admin & User)",
+            "Vehicle Catalog with Pricing Simulation"
+        ]
+    },
+    {
+        id: 6,
         title: "Office Sentry App",
         category: "Web Development",
         desc: "Office security management and personnel monitoring application.",
