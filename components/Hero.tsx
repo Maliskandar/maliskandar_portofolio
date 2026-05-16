@@ -53,6 +53,10 @@ const Hero = () => {
                 <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">About</a>
                 <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Work</a>
                 <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Stack</a>
+                <a href="/dashboard" className="text-xs md:text-sm font-bold tracking-widest uppercase text-primary hover:text-white transition-colors cursor-pointer flex items-center gap-1.5">
+                    Dashboard
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                </a>
                 <a href="#contact" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Contact</a>
             </nav>
 
