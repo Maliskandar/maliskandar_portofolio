@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
-import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -62,7 +61,6 @@ export default function RootLayout({
         className={`${inter.variable} ${firaCode.variable} bg-dark text-white antialiased`}
       >
         <LenisProvider>
-          <ScrollProgress />
           <CustomCursor />
           {children}
         </LenisProvider>

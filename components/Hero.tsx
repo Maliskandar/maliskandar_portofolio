@@ -50,16 +50,16 @@ const Hero = () => {
         >
             {/* Fixed Floating Navigation */}
             <nav className="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-1 pl-6 pr-2 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full z-50 shadow-2xl">
-                <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">About</a>
-                <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Work</a>
-                <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Stack</a>
-                <a href="#contact" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Contact</a>
+                <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">About</a>
+                <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">Work</a>
+                <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">Stack</a>
+                <a href="#contact" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">Contact</a>
                 <span className="w-px h-5 bg-white/10 mx-2" aria-hidden />
                 <a
                     href="/dashboard"
-                    className="text-xs md:text-sm font-bold tracking-widest uppercase text-primary hover:bg-primary hover:text-black transition-all cursor-pointer flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 ml-1"
+                    className="relative text-xs md:text-sm font-bold tracking-widest uppercase text-primary hover:text-white hover:bg-primary/25 hover:border-primary hover:shadow-[0_0_24px_rgba(0,240,255,0.45)] transition-all cursor-pointer flex items-center px-4 py-2 rounded-full border border-primary/30 bg-primary/10 ml-1 leading-none"
                 >
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                    <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary animate-pulse ring-2 ring-[#0a0a0a]" />
                     Dashboard
                 </a>
             </nav>
