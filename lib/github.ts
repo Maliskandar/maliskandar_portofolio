@@ -16,6 +16,7 @@ export type GitHubProfile = {
   followers: number;
   following: number;
   public_repos: number;
+  total_private_repos?: number;
   created_at: string;
   location: string | null;
 };
@@ -33,6 +34,7 @@ export type GitHubRepo = {
   topics?: string[];
   fork: boolean;
   archived: boolean;
+  private: boolean;
 };
 
 export type LanguageStat = { name: string; bytes: number; percentage: number };
@@ -45,7 +47,11 @@ export type GitHubStats = {
     stars: number;
     forks: number;
     repos: number;
+    publicRepos: number;
+    privateRepos: number;
     commits_year: number;
+    public_commits_year: number;
+    private_commits_year: number;
   };
   topRepos: GitHubRepo[];
   languages: LanguageStat[];
@@ -55,6 +61,7 @@ export type GitHubStats = {
   };
   fetchedAt: string;
   source: "live" | "fallback";
+  authenticated: boolean;
 };
 
 async function gh<T>(path: string): Promise<T> {
@@ -66,7 +73,106 @@ async function gh<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-async function fetchContributions(username: string): Promise<GitHubStats["contributions"]> {
+async function fetchAllRepos(): Promise<GitHubRepo[]> {
+  const all: GitHubRepo[] = [];
+  // When authenticated, /user/repos returns both public + private owned by viewer.
+  // Otherwise, /users/{username}/repos returns public only.
+  const basePath = GITHUB_TOKEN
+    ? `/user/repos?per_page=100&affiliation=owner&visibility=all&sort=updated`
+    : `/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
+  for (let page = 1; page <= 5; page++) {
+    const sep = basePath.includes("?") ? "&" : "?";
+    const batch = await gh<GitHubRepo[]>(`${basePath}${sep}page=${page}`);
+    all.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return all;
+}
+
+async function fetchContributionsGraphQL(
+  username: string
+): Promise<(GitHubStats["contributions"] & { restrictedCount: number; publicCount: number }) | null> {
+  if (!GITHUB_TOKEN) return null;
+  const query = `query($login:String!){
+    user(login:$login){
+      contributionsCollection{
+        totalCommitContributions
+        totalIssueContributions
+        totalPullRequestContributions
+        totalPullRequestReviewContributions
+        restrictedContributionsCount
+        contributionCalendar{
+          totalContributions
+          weeks{
+            contributionDays{ date contributionCount contributionLevel }
+          }
+        }
+      }
+    }
+  }`;
+  try {
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query, variables: { login: username } }),
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    const json = (await res.json()) as {
+      data?: {
+        user?: {
+          contributionsCollection?: {
+            totalCommitContributions: number;
+            totalIssueContributions: number;
+            totalPullRequestContributions: number;
+            totalPullRequestReviewContributions: number;
+            restrictedContributionsCount: number;
+            contributionCalendar?: {
+              totalContributions: number;
+              weeks: { contributionDays: { date: string; contributionCount: number; contributionLevel: string }[] }[];
+            };
+          };
+        };
+      };
+    };
+    const cc = json.data?.user?.contributionsCollection;
+    const cal = cc?.contributionCalendar;
+    if (!cal || !cc) return null;
+    const levelMap: Record<string, 0 | 1 | 2 | 3 | 4> = {
+      NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4,
+    };
+    const weeks: ContributionDay[][] = cal.weeks.map((w) =>
+      w.contributionDays.map((d) => ({
+        date: d.date,
+        count: d.contributionCount,
+        level: levelMap[d.contributionLevel] ?? 0,
+      }))
+    );
+    // Kalau "Include private contributions on my profile" aktif, cal.totalContributions
+    // sudah include private. restrictedContributionsCount = subset private dari total itu.
+    // Kalau setting OFF, cal.totalContributions = public-only, restricted di-expose
+    // terpisah tapi tidak masuk kalender — jadi total real = public + private.
+    const restricted = cc.restrictedContributionsCount;
+    const calTotal = cal.totalContributions;
+    // Heuristik: kalau calTotal >= restricted, asumsikan setting ON (private sudah dihitung).
+    // Kalau calTotal < restricted, setting OFF — total real = calTotal + restricted.
+    const total = calTotal >= restricted ? calTotal : calTotal + restricted;
+    const publicCount = calTotal >= restricted ? calTotal - restricted : calTotal;
+    return {
+      total,
+      weeks,
+      restrictedCount: restricted,
+      publicCount,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function fetchContributionsFallback(username: string): Promise<GitHubStats["contributions"]> {
   try {
     const res = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
@@ -99,27 +205,26 @@ export async function getGitHubStats(): Promise<GitHubStats> {
   try {
     const profile = await gh<GitHubProfile>(`/users/${GITHUB_USERNAME}`);
 
-    const allRepos: GitHubRepo[] = [];
-    for (let page = 1; page <= 4; page++) {
-      const batch = await gh<GitHubRepo[]>(
-        `/users/${GITHUB_USERNAME}/repos?per_page=100&page=${page}&sort=updated`
-      );
-      allRepos.push(...batch);
-      if (batch.length < 100) break;
-    }
+    const allRepos = await fetchAllRepos();
 
     const ownRepos = allRepos.filter((r) => !r.fork);
+    const publicOwn = ownRepos.filter((r) => !r.private);
+    const privateOwn = ownRepos.filter((r) => r.private);
     const stars = ownRepos.reduce((s, r) => s + r.stargazers_count, 0);
     const forks = ownRepos.reduce((s, r) => s + r.forks_count, 0);
 
     const topRepos = [...ownRepos]
-      .sort((a, b) => b.stargazers_count - a.stargazers_count || +new Date(b.updated_at) - +new Date(a.updated_at))
-      .slice(0, 6);
+      .sort(
+        (a, b) =>
+          b.stargazers_count - a.stargazers_count ||
+          +new Date(b.updated_at) - +new Date(a.updated_at)
+      )
+      .slice(0, 9);
 
     const langMap: Record<string, number> = {};
     const topForLang = [...ownRepos]
       .sort((a, b) => +new Date(b.updated_at) - +new Date(a.updated_at))
-      .slice(0, 15);
+      .slice(0, 20);
     await Promise.all(
       topForLang.map(async (r) => {
         try {
@@ -142,21 +247,29 @@ export async function getGitHubStats(): Promise<GitHubStats> {
       .sort((a, b) => b.bytes - a.bytes)
       .slice(0, 8);
 
-    const contributions = await fetchContributions(GITHUB_USERNAME);
+    const gqlContrib = await fetchContributionsGraphQL(GITHUB_USERNAME);
+    const contributions = gqlContrib ?? (await fetchContributionsFallback(GITHUB_USERNAME));
+    const publicCommits = gqlContrib?.publicCount ?? contributions.total;
+    const privateCommits = gqlContrib?.restrictedCount ?? 0;
 
     return {
       profile,
       totals: {
         stars,
         forks,
-        repos: profile.public_repos,
+        repos: ownRepos.length,
+        publicRepos: publicOwn.length,
+        privateRepos: privateOwn.length,
         commits_year: contributions.total,
+        public_commits_year: publicCommits,
+        private_commits_year: privateCommits,
       },
       topRepos,
       languages,
       contributions,
       fetchedAt: new Date().toISOString(),
       source: "live",
+      authenticated: !!GITHUB_TOKEN,
     };
   } catch (err) {
     console.error("[github] falling back:", err);
@@ -178,11 +291,12 @@ function fallbackStats(): GitHubStats {
       created_at: new Date().toISOString(),
       location: null,
     },
-    totals: { stars: 0, forks: 0, repos: 0, commits_year: 0 },
+    totals: { stars: 0, forks: 0, repos: 0, publicRepos: 0, privateRepos: 0, commits_year: 0, public_commits_year: 0, private_commits_year: 0 },
     topRepos: [],
     languages: [],
     contributions: { total: 0, weeks: [] },
     fetchedAt: new Date().toISOString(),
     source: "fallback",
+    authenticated: false,
   };
 }

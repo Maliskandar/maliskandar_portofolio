@@ -34,9 +34,6 @@ yarn-error.log*
 .env*
 !.env.example
 
-# runtime analytics store
-/data/analytics.json
-
 # vercel
 .vercel
 

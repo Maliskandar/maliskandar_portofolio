@@ -49,15 +49,19 @@ const Hero = () => {
             className="relative w-full min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center overflow-hidden font-sans selection:bg-primary selection:text-black"
         >
             {/* Fixed Floating Navigation */}
-            <nav className="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-6 md:gap-10 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-full z-50 shadow-2xl">
-                <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">About</a>
-                <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Work</a>
-                <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Stack</a>
-                <a href="/dashboard" className="text-xs md:text-sm font-bold tracking-widest uppercase text-primary hover:text-white transition-colors cursor-pointer flex items-center gap-1.5">
-                    Dashboard
+            <nav className="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-1 pl-6 pr-2 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full z-50 shadow-2xl">
+                <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">About</a>
+                <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Work</a>
+                <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Stack</a>
+                <a href="#contact" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2">Contact</a>
+                <span className="w-px h-5 bg-white/10 mx-2" aria-hidden />
+                <a
+                    href="/dashboard"
+                    className="text-xs md:text-sm font-bold tracking-widest uppercase text-primary hover:bg-primary hover:text-black transition-all cursor-pointer flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 ml-1"
+                >
                     <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                    Dashboard
                 </a>
-                <a href="#contact" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Contact</a>
             </nav>
 
             {/* ================================================== */}
