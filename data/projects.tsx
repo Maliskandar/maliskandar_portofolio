@@ -18,25 +18,135 @@ export type Project = {
 };
 
 // --- ALL PROJECTS DATA ---
-// Tambahkan project baru di array ini. 
+// Tambahkan project baru di array ini.
 // Halaman Home (ProjectBento) otomatis hanya menampilkan 5 project teratas.
 export const allProjects: Project[] = [
     {
         id: 1,
+        title: "Kardeşler Uygur Mutfağı",
+        category: "Landing Page",
+        desc: "High-performance landing page for an authentic Uyghur restaurant in Ankara, Turkey with headless CMS.",
+        stack: [<SiNextdotjs key="nx" />, <SiReact key="r" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-1 md:row-span-1",
+        bg: "bg-gradient-to-br from-green-800/40 to-slate-900",
+        techDetails: "Developed with Next.js 16 and Tailwind CSS v4, featuring scroll-triggered animations via Framer Motion. Built on a Sanity headless CMS with flexible relational schemas. Data fetching pipeline uses GROQ queries and Next.js ISR with smart fallback for reliability and ultra-fast load times.",
+        features: [
+            "Headless CMS with Sanity",
+            "Framer Motion Scroll Animations",
+            "GROQ Queries with ISR Fallback",
+            "Dynamic sitemap.xml & robots.txt for SEO",
+            "Dynamic Multimedia & Menu Management"
+        ],
+        externalLink: "https://kardesleruygurmutfagi.com.tr"
+    },
+    {
+        id: 2,
+        title: "CV Satya Perkasa Mobilindo",
+        category: "Full-Stack Development",
+        desc: "Automotive e-commerce & service portal for vehicle sales, trade-ins, and digital service workflows.",
+        stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-2 md:row-span-1",
+        bg: "bg-gradient-to-br from-red-800/40 to-slate-900",
+        image: "/img/Landingpage.png",
+        galleryImages: ["/img/Landingpage.png", "/img/Detail Mobil 2.png", "/img/Login.png", "/img/Booking Services.png", "/img/Booking Test Drive.png", "/img/Dashboard Admin.png"],
+        techDetails: "Built with Laravel 13 (PHP 8.3) managing complex backend logic for vehicle sales, trade-ins, and digital service workflows. Frontend optimized using Tailwind CSS, Vite, and Blade templates with a custom CMS. Integrated Midtrans payment gateway with reliable API webhooks for real-time payment callbacks.",
+        features: [
+            "Interactive Vehicle Digital Showroom",
+            "Midtrans Payment Gateway Integration",
+            "Online Test Drive & Service Booking",
+            "Role-based Dashboard (Admin & User)",
+            "Custom CMS for Landing Page Content"
+        ],
+        externalLink: "https://demo-carservices.lumevotech.com/"
+    },
+    {
+        id: 3,
+        title: "SMK Al-Musyaffa",
+        category: "School Management System",
+        desc: "Comprehensive school administration system with barcode attendance and automated reporting.",
+        stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-2 md:row-span-2",
+        bg: "bg-gradient-to-br from-blue-900/60 to-orange-900",
+        techDetails: "Built with Laravel 12 (PHP 8.2) featuring role-based access control for administrators, teachers, and finance personnel. Real-time attendance tracking via physical barcode scanners. Bulk data processing with Maatwebsite Excel and automated PDF reports with DomPDF.",
+        features: [
+            "Role-Based Access (Admin, Teacher, Finance)",
+            "Barcode Scanner Attendance Tracking",
+            "Bulk Excel Import & PDF Report Export",
+            "System Audit Trail (Activity Logging)",
+            "Financial Recapitulation for Students"
+        ],
+        externalLink: "https://smartmusyaffa.com/"
+    },
+    {
+        id: 4,
+        title: "Nox Connection",
+        category: "B2B Game Top-Up Platform",
+        desc: "International B2B game top-up platform with integrated payment gateway, currently in development.",
+        stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-1 md:row-span-1",
+        bg: "bg-gradient-to-br from-indigo-900/60 to-slate-900",
+        techDetails: "Built with Laravel and MySQL targeting international markets. Implements payment gateway integration, multi-currency support, and B2B reseller tier management for streamlined game credit distribution.",
+        features: [
+            "B2B Reseller Management",
+            "Payment Gateway Integration",
+            "Multi-Game Catalog Support",
+            "Real-time Transaction Processing",
+            "Admin Dashboard with Analytics"
+        ],
+        externalLink: "https://demo-nox.lumevotech.com/"
+    },
+    {
+        id: 5,
+        title: "Cashify",
+        category: "SaaS",
+        desc: "Smart cashier and POS system delivered as a SaaS for retail and F&B businesses.",
+        stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-1 md:row-span-1",
+        bg: "bg-gradient-to-br from-blue-700/40 to-slate-900",
+        techDetails: "Multi-tenant SaaS POS application built with Laravel and MySQL. Provides point-of-sale, inventory tracking, and sales analytics through subscription-based tenant workspaces.",
+        features: [
+            "Multi-Tenant SaaS Architecture",
+            "Point-of-Sale Transactions",
+            "Inventory & Stock Management",
+            "Sales Analytics & Reports",
+            "Subscription Plan Management"
+        ],
+        externalLink: "http://cashify.click/"
+    },
+    {
+        id: 6,
+        title: "Apple Thrift",
+        category: "Inventory Management System",
+        desc: "Stock and sales management platform for a second-hand iPhone retail business.",
+        stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
+        span: "md:col-span-1 md:row-span-1",
+        bg: "bg-gradient-to-br from-yellow-700/60 to-slate-900",
+        techDetails: "Inventory and sales management system built with Laravel and MySQL, designed to manage iPhone unit stock, sales tracking, and customer records for a thrift retail operation.",
+        features: [
+            "iPhone Unit Stock Management",
+            "Sales & Transaction Records",
+            "Customer Database",
+            "Product Condition Grading",
+            "Sales Performance Dashboard"
+        ],
+        externalLink: "https://manajemen.applethrift.id/"
+    },
+    {
+        id: 7,
         title: "Wallet Go! Mobile App",
         category: "UI/UX Design",
         desc: "Modern digital wallet application design focusing on seamless money transfers and top-ups.",
         stack: [<SiFigma key="f" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-cyan-400/40 to-slate-900",
-        image: "/projects/wallet-mobile.png", // Keep original images if any, fallback handles missing
+        image: "/projects/wallet-mobile.png",
         galleryImages: ["/projects/wallet-mobile.png"],
         features: ["Intuitive User Flow", "Light & Dark Mode", "Interactive Prototyping"],
         techDetails: "Designed entirely from scratch in Figma focusing on mobile-first user experience and material design guidelines.",
         externalLink: "https://www.figma.com/design/JE3q5Cftdo8iYZZH9Z9zWa/Wallet-Go-?node-id=0-1&t=q59sqGfb1XTIUifw-1"
     },
     {
-        id: 2,
+        id: 8,
         title: "Nihloh Coffee & Eatery",
         category: "Landing Page",
         desc: "High-performance landing page for F&B business focusing on SEO and responsive design.",
@@ -50,7 +160,7 @@ export const allProjects: Project[] = [
         externalLink: "https://nihlohcafe.vercel.app"
     },
     {
-        id: 3,
+        id: 9,
         title: "Electronic Medical Records",
         category: "Full-Stack Development",
         desc: "Electronic medical records and patient management system for independent midwife practices.",
@@ -68,13 +178,13 @@ export const allProjects: Project[] = [
         ]
     },
     {
-        id: 4,
+        id: 10,
         title: "Noiia Studio",
-        category: "Creative Agency Website",
+        category: "Landing Page",
         desc: "Immersive digital experience showcasing modern aesthetics and smooth interactions.",
         stack: [<SiNextdotjs key="nx" />, <SiTypescript key="ts" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
-        bg: "bg-gradient-to-tr from-emerald-900/40 to-dark",
+        bg: "bg-gradient-to-tr from-slate-900/40 to-dark",
         image: "/projects/photo-studio-1.png",
         galleryImages: ["/img/NoiaLandingpage.png"],
         features: ["Pixel-perfect Minimalist UI", "Smooth Interactions", "Optimized Image Rendering & CLS"],
@@ -82,27 +192,9 @@ export const allProjects: Project[] = [
         externalLink: "https://noiia-studio.vercel.app"
     },
     {
-        id: 5,
-        title: "CV Satya Perkasa Mobilindo",
-        category: "Front-End Development",
-        desc: "Official digital showroom and dealership website for Suzuki Indonesia.",
-        stack: [<SiLaravel key="l" />, <SiTailwindcss key="t" />],
-        span: "md:col-span-1 md:row-span-1",
-        bg: "bg-[#111827] hover:bg-[#1F2937]",
-        image: "/img/Landingpage.png",
-        galleryImages: ["/img/Landingpage.png", "/img/Detail Mobil 2.png", "/img/Login.png", "/img/Booking Services.png", "/img/Booking Test Drive.png", "/img/Dashboard Admin.png"],
-        techDetails: "A comprehensive automotive dealership platform built covering Suzuki passenger and commercial vehicles. It features role-based access control, allowing users to book services and schedule test drives, while providing an admin dashboard to manage inquiries.",
-        features: [
-            "Interactive Vehicle Digital Showroom",
-            "Online Test Drive & Service Booking",
-            "Role-based Dashboard (Admin & User)",
-            "Vehicle Catalog with Pricing Simulation"
-        ]
-    },
-    {
-        id: 6,
+        id: 11,
         title: "Office Sentry App",
-        category: "Web Development",
+        category: "Full-Stack Development",
         desc: "Office security management and personnel monitoring application.",
         stack: [<SiLaravel key="l" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",

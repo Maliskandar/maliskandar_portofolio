@@ -5,18 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { allProjects, Project } from '@/data/projects';
 import ProjectModal from '@/components/ProjectModal';
 import Link from 'next/link';
-import Image from 'next/image';
-import { FiArrowLeft, FiExternalLink, FiLayers } from 'react-icons/fi';
+import { FiArrowLeft, FiExternalLink, FiMaximize2 } from 'react-icons/fi';
 
 export default function ProjectsPage() {
     const [selectedCategory, setSelectedCategory] = useState<string>("All");
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    
-    // Get unique categories
+
     const categories: string[] = ["All", ...Array.from(new Set(allProjects.map((p: Project) => p.category)))];
 
-    const filteredProjects = selectedCategory === "All" 
-        ? allProjects 
+    const filteredProjects = selectedCategory === "All"
+        ? allProjects
         : allProjects.filter((p: Project) => p.category === selectedCategory);
 
     return (
@@ -33,7 +31,7 @@ export default function ProjectsPage() {
 
             <div className="max-w-7xl mx-auto px-6 py-20 md:py-24">
                 {/* Titles */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-12 md:mb-16"
@@ -47,7 +45,7 @@ export default function ProjectsPage() {
                 </motion.div>
 
                 {/* Filters */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
@@ -58,8 +56,8 @@ export default function ProjectsPage() {
                             key={idx}
                             onClick={() => setSelectedCategory(cat)}
                             className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                                selectedCategory === cat 
-                                    ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]" 
+                                selectedCategory === cat
+                                    ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                     : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
                             }`}
                         >
@@ -68,83 +66,23 @@ export default function ProjectsPage() {
                     ))}
                 </motion.div>
 
-                {/* Grid */}
-                <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {/* BENTO GRID */}
+                <motion.div
+                    layout
+                    className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[320px] [grid-auto-flow:dense]"
+                >
                     <AnimatePresence mode="popLayout">
-                        {filteredProjects.map((project: Project, idx: number) => (
-                            <motion.div
-                                layout
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.3 }}
+                        {filteredProjects.map((project: Project) => (
+                            <BentoCard
                                 key={project.id}
+                                project={project}
                                 onClick={() => setSelectedProject(project)}
-                                className={`group relative rounded-3xl overflow-hidden border border-gray-800/50 bg-[#111318] flex flex-col h-[480px] hover:border-gray-700 transition-colors duration-500 cursor-pointer hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.15)]`}
-                            >
-                                {/* Image Container */}
-                                <div className="h-[240px] w-full relative overflow-hidden bg-gray-900 shrink-0">
-                                    {project.image ? (
-                                        <Image 
-                                            src={project.image} 
-                                            alt={project.title} 
-                                            fill 
-                                            className="object-cover object-top transition-all duration-[4000ms] ease-in-out group-hover:object-bottom group-hover:scale-105" 
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-700">
-                                            <FiLayers size={40} className="mb-2" />
-                                            <span className="text-xs uppercase tracking-widest">No Image</span>
-                                        </div>
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#111318] to-transparent opacity-100" />
-                                    
-                                    <div className="absolute top-4 right-4 flex gap-2">
-                                        {project.externalLink && (
-                                            <a 
-                                                href={project.externalLink} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                onClick={(e) => e.stopPropagation()}
-                                                className="w-10 h-10 flex items-center justify-center bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-primary hover:text-black hover:border-primary transition-all shadow-lg"
-                                            >
-                                                <FiExternalLink size={18} />
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-6 md:p-8 flex flex-col flex-grow justify-between relative z-10 -mt-12">
-                                    <div className="bg-[#111318] pt-2">
-                                        <span className="text-primary text-xs font-mono uppercase tracking-widest mb-2 block">
-                                            {project.category}
-                                        </span>
-                                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-gray-400 text-sm line-clamp-3 leading-relaxed">
-                                            {project.desc}
-                                        </p>
-                                    </div>
-
-                                    {/* Footer / Stack */}
-                                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                                        <div className="flex gap-3 text-xl text-gray-500">
-                                            {project.stack.map((icon: React.ReactNode, i: number) => (
-                                                <span key={i} className="group-hover:text-gray-300 transition-colors" title="Tech Stack Icon">
-                                                    {icon}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
+                            />
                         ))}
                     </AnimatePresence>
                 </motion.div>
             </div>
-            
+
             {/* PROJECT MODAL */}
             <AnimatePresence>
                 {selectedProject && (
@@ -157,3 +95,64 @@ export default function ProjectsPage() {
         </main>
     );
 }
+
+// --- BENTO CARD ---
+const BentoCard = ({ project, onClick }: { project: Project, onClick: () => void }) => {
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClick}
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            className={`group relative overflow-hidden rounded-3xl border border-gray-800 cursor-pointer transition-shadow hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.15)] ${project.span} ${project.bg}`}
+        >
+            {/* Watermark Fallback */}
+            <div className="absolute -right-10 -bottom-10 text-[12rem] text-white/5 rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
+                {project.stack[0]}
+            </div>
+
+            {/* Content Container */}
+            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">
+                {/* Top Tags */}
+                <div className="flex justify-between items-start">
+                    <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-xs font-medium tracking-wide text-gray-300 border border-white/5">
+                        {project.category}
+                    </span>
+                    <button
+                        onClick={(e) => {
+                            if (project.externalLink) {
+                                e.stopPropagation();
+                                window.open(project.externalLink, '_blank', 'noopener,noreferrer');
+                            }
+                        }}
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/5 text-white/70 group-hover:bg-primary group-hover:text-dark group-hover:border-primary transition-all duration-300 -translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0"
+                    >
+                        {project.externalLink ? <FiExternalLink size={18} /> : <FiMaximize2 size={18} />}
+                    </button>
+                </div>
+
+                {/* Bottom Info */}
+                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
+                        {project.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm md:text-base line-clamp-2 md:line-clamp-3 mb-5 max-w-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 hidden md:block">
+                        {project.desc}
+                    </p>
+
+                    {/* Tech Stack Bar */}
+                    <div className="flex items-center gap-3 text-xl text-gray-400">
+                        {project.stack.map((icon: React.ReactNode, i: number) => (
+                            <span key={i} className="group-hover:text-white transition-colors duration-300">
+                                {icon}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
