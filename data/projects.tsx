@@ -29,6 +29,8 @@ export const allProjects: Project[] = [
         stack: [<SiNextdotjs key="nx" />, <SiReact key="r" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-green-800/40 to-slate-900",
+        image: "/projects/uygur-mutfagi/landingpage.webp",
+        galleryImages: ["/projects/uygur-mutfagi/landingpage.webp", "/projects/uygur-mutfagi/about.webp"],
         techDetails: "Developed with Next.js 16 and Tailwind CSS v4, featuring scroll-triggered animations via Framer Motion. Built on a Sanity headless CMS with flexible relational schemas. Data fetching pipeline uses GROQ queries and Next.js ISR with smart fallback for reliability and ultra-fast load times.",
         features: [
             "Headless CMS with Sanity",
@@ -67,6 +69,8 @@ export const allProjects: Project[] = [
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-2 md:row-span-2",
         bg: "bg-gradient-to-br from-blue-900/60 to-orange-900",
+        image: "/projects/smk-almusyaffa/landingpage.webp",
+        galleryImages: ["/projects/smk-almusyaffa/landingpage.webp", "/projects/smk-almusyaffa/dashboard-kepsek.webp"],
         techDetails: "Built with Laravel 12 (PHP 8.2) featuring role-based access control for administrators, teachers, and finance personnel. Real-time attendance tracking via physical barcode scanners. Bulk data processing with Maatwebsite Excel and automated PDF reports with DomPDF.",
         features: [
             "Role-Based Access (Admin, Teacher, Finance)",
@@ -85,6 +89,15 @@ export const allProjects: Project[] = [
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-indigo-900/60 to-slate-900",
+        image: "/projects/nox-connection/a.webp",
+        galleryImages: [
+            "/projects/nox-connection/a.webp",
+            "/projects/nox-connection/b.webp",
+            "/projects/nox-connection/c.webp",
+            "/projects/nox-connection/d.webp",
+            "/projects/nox-connection/e.webp",
+            "/projects/nox-connection/f.webp"
+        ],
         techDetails: "Built with Laravel and MySQL targeting international markets. Implements payment gateway integration, multi-currency support, and B2B reseller tier management for streamlined game credit distribution.",
         features: [
             "B2B Reseller Management",
@@ -103,6 +116,8 @@ export const allProjects: Project[] = [
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-blue-700/40 to-slate-900",
+        image: "/projects/cashify/landingpage.webp",
+        galleryImages: ["/projects/cashify/landingpage.webp"],
         techDetails: "Multi-tenant SaaS POS application built with Laravel and MySQL. Provides point-of-sale, inventory tracking, and sales analytics through subscription-based tenant workspaces.",
         features: [
             "Multi-Tenant SaaS Architecture",
