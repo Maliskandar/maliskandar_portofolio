@@ -49,13 +49,13 @@ export default function ProjectsPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="flex flex-wrap gap-3 mb-12"
+                    className="flex gap-3 mb-12 overflow-x-auto md:flex-wrap pb-2 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
                     {categories.map((cat: string, idx: number) => (
                         <button
                             key={idx}
                             onClick={() => setSelectedCategory(cat)}
-                            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                            className={`shrink-0 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
                                 selectedCategory === cat
                                     ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                                     : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"

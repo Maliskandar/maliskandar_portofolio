@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-    SiReact, SiNextdotjs, SiTailwindcss, SiVuedotjs, 
-    SiLaravel, SiNodedotjs, SiExpress, SiPhp, 
+import {
+    SiReact, SiNextdotjs, SiTailwindcss, SiVuedotjs,
+    SiLaravel, SiNodedotjs, SiExpress, SiPhp,
     SiMysql, SiPostgresql, SiMongodb, SiFirebase,
-    SiTypescript, SiJavascript, SiFigma, SiGit 
+    SiTypescript, SiJavascript, SiFigma, SiGit
 } from 'react-icons/si';
 
 // Defining tech stack with categories
@@ -51,8 +51,8 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof fron
                 }}
             >
                 {duplicatedItems.map((tech, index) => (
-                    <div 
-                        key={index} 
+                    <div
+                        key={index}
                         className="flex flex-col items-center justify-center min-w-30 md:min-w-40 p-6 bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl hover:bg-gray-800/80 transition-all duration-300 group-hover:pause"
                         style={{ '--hover-color': tech.color } as React.CSSProperties}
                         onMouseEnter={(e) => {
@@ -64,7 +64,7 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof fron
                             e.currentTarget.style.boxShadow = '';
                         }}
                     >
-                        <div 
+                        <div
                             className="text-4xl md:text-5xl mb-3 text-gray-500 transition-colors duration-300 transform group-hover/card:scale-110"
                             style={{ color: "currentColor" }}
                             onMouseEnter={(e) => e.currentTarget.style.color = tech.color}
@@ -85,7 +85,7 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof fron
 const TechMarquee = () => {
     return (
         <section id="stack" className="relative w-full py-24 bg-dark overflow-hidden border-t-2 border-b-2 border-gray-900/50">
-            
+
             {/* Grid Background Pattern */}
             <div className="absolute inset-x-0 top-0 h-full opacity-[0.03] pointer-events-none bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-white via-dark to-dark z-0" />
 
@@ -101,7 +101,7 @@ const TechMarquee = () => {
                         <div className="h-1 w-16 bg-primary rounded mx-auto md:mx-0"></div>
                     </motion.div>
                 </div>
-                <motion.p 
+                <motion.p
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -116,13 +116,6 @@ const TechMarquee = () => {
             <div className="flex flex-col gap-4 relative z-20">
                 <MarqueeRow items={frontendRow} reverse={false} speed={35} />
                 <MarqueeRow items={backendRow} reverse={true} speed={40} />
-            </div>
-
-            {/* Instruction tooltip (mobile optional, nice for UX) */}
-            <div className="text-center mt-12 text-xs text-gray-600 font-mono tracking-widest uppercase relative z-20">
-                <span className="hidden md:inline">Hover over</span> 
-                <span className="md:hidden">Tap</span> 
-                {' '}icons to illuminate
             </div>
 
         </section>

@@ -7,7 +7,7 @@ import Certifications from '@/components/Certifications';
 
 export default function Home() {
   return (
-    <main className="bg-dark min-h-screen">
+    <main className="bg-dark min-h-screen pb-20 md:pb-0">
       <Hero />
       <AboutMe />
       <Certifications />

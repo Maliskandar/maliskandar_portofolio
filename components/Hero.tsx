@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { TypeAnimation } from "react-type-animation";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
+import { FiUser, FiBriefcase, FiLayers, FiMail, FiGrid } from "react-icons/fi";
 
 const Hero = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -48,8 +49,8 @@ const Hero = () => {
             ref={containerRef}
             className="relative w-full min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center overflow-hidden font-sans selection:bg-primary selection:text-black"
         >
-            {/* Fixed Floating Navigation */}
-            <nav className="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-1 pl-6 pr-2 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full z-50 shadow-2xl">
+            {/* Fixed Floating Navigation — Desktop / Tablet */}
+            <nav className="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 items-center gap-1 pl-6 pr-2 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full z-50 shadow-2xl">
                 <a href="#about" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">About</a>
                 <a href="#work" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">Work</a>
                 <a href="#stack" className="text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer px-3 py-2 border border-transparent leading-none flex items-center">Stack</a>
@@ -62,6 +63,38 @@ const Hero = () => {
                     <span className="absolute top-0.5 right-0.5 h-2 w-2 rounded-full bg-primary animate-pulse ring-2 ring-[#0a0a0a]" />
                     Dashboard
                 </a>
+            </nav>
+
+            {/* Bottom Navigation Bar — Mobile only (Android-style) */}
+            <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-[#0a0a0a]/85 backdrop-blur-xl border-t border-white/10 px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.4rem)] shadow-[0_-8px_24px_rgba(0,0,0,0.4)]">
+                <ul className="flex items-stretch justify-around">
+                    {[
+                        { href: "#about", label: "About", Icon: FiUser },
+                        { href: "#work", label: "Work", Icon: FiBriefcase },
+                        { href: "#stack", label: "Stack", Icon: FiLayers },
+                        { href: "#contact", label: "Contact", Icon: FiMail },
+                        { href: "/dashboard", label: "Dashboard", Icon: FiGrid, primary: true },
+                    ].map(({ href, label, Icon, primary }) => (
+                        <li key={href} className="flex-1">
+                            <a
+                                href={href}
+                                className={`flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl transition-all active:scale-90 ${
+                                    primary
+                                        ? "text-primary"
+                                        : "text-gray-400 hover:text-white active:text-primary"
+                                }`}
+                            >
+                                <span className="relative flex items-center justify-center">
+                                    <Icon className="text-[22px]" />
+                                    {primary && (
+                                        <span className="absolute -top-0.5 -right-1 h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                                    )}
+                                </span>
+                                <span className="text-[10px] font-medium tracking-wide leading-none">{label}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
             </nav>
 
             {/* ================================================== */}
@@ -199,7 +232,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 z-20"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 opacity-50 z-20"
             >
                 <div className="text-[10px] font-mono tracking-widest text-gray-500 uppercase">Scroll</div>
                 <div className="w-[1px] h-12 bg-gradient-to-b from-gray-500 to-transparent"></div>
