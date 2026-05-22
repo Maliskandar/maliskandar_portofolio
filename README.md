@@ -1,4 +1,4 @@
-# Muhammad Akmal Iskandar — Portfolio & Analytics Dashboard
+# Muhammad Akmal Iskandar Portfolio & Analytics Dashboard
 
 A modern **next-generation portfolio website** featuring a **live analytics dashboard** that aggregates data from multiple sources: GitHub contribution activity, WakaTime coding statistics, and first-party website pageview tracking.
 
