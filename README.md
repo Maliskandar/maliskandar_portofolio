@@ -368,7 +368,7 @@ This project is open-sourced under the **MIT License**. See [LICENSE](LICENSE) f
 Built by **Muhammad Akmal Iskandar** — a full-stack developer passionate about building beautiful, data-driven web experiences.
 
 - **GitHub:** [@Maliskandar](https://github.com/Maliskandar)
-- **Website:** [portfolio.maliskandar.dev](https://portfolio.maliskandar.dev)
+- **Website:** [portfolio.maliskandar.dev]([https://portfolio.maliskandar.dev](https://maliskandar-portofolio.vercel.app/))
 - **Email:** [Contact](mailto:contact@maliskandar.dev)
 
 ---
