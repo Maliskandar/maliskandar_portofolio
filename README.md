@@ -2,7 +2,7 @@
 
 A modern **next-generation portfolio website** featuring a **live analytics dashboard** that aggregates data from multiple sources: GitHub contribution activity, WakaTime coding statistics, and first-party website pageview tracking.
 
-**[View Live Demo](https://portfolio.maliskandar.dev)** · **[Dashboard](https://portfolio.maliskandar.dev/dashboard)**
+**[View Live Demo]([https://portfolio.maliskandar.dev](https://maliskandar-portofolio.vercel.app/))** · **[Dashboard]([https://portfolio.maliskandar.dev/dashboard](https://maliskandar-portofolio.vercel.app/dashboard))**
 
 ---
 
