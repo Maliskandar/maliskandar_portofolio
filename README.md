@@ -369,7 +369,7 @@ Built by **Muhammad Akmal Iskandar** — a full-stack developer passionate about
 
 - **GitHub:** [@Maliskandar](https://github.com/Maliskandar)
 - **Website:** [portfolio.maliskandar.dev]([https://portfolio.maliskandar.dev](https://maliskandar-portofolio.vercel.app/))
-- **Email:** [Contact](mailto:contact@maliskandar.dev)
+- **Email:** [Contact](mailto:sao19082002@gmail.com)
 
 ---
 
