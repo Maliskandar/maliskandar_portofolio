@@ -68,7 +68,7 @@ export default function GitHubPanel({ data }: { data: GitHubStats }) {
             <a href={profile.html_url} target="_blank" rel="noreferrer" className="text-primary hover:underline font-medium">
               @{profile.login}
             </a>
-            {" "}— {totals.repos} repos, {totals.stars} stars, and whatever I committed in the last year.
+            {" "}{totals.repos} repos, {totals.stars} stars, and whatever I committed in the last year.
             {source === "fallback" && <span className="ml-2 text-amber-400">· using fallback data</span>}
           </p>
         </div>
@@ -104,8 +104,8 @@ export default function GitHubPanel({ data }: { data: GitHubStats }) {
             data.authenticated && totals.private_commits_year > 0
               ? `${totals.public_commits_year} public · ${totals.private_commits_year} private`
               : data.authenticated
-              ? "public only — enable in settings"
-              : "public only"
+                ? "public only — enable in settings"
+                : "public only"
           }
         />
       </div>
@@ -216,11 +216,10 @@ export default function GitHubPanel({ data }: { data: GitHubStats }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.05 * i }}
-              className={`group block rounded-2xl border p-5 transition-all ${
-                r.private
-                  ? "border-rose-500/20 bg-rose-500/[0.03] hover:border-rose-400/40"
-                  : "border-white/10 bg-white/[0.03] hover:border-primary/40 hover:bg-white/[0.05]"
-              }`}
+              className={`group block rounded-2xl border p-5 transition-all ${r.private
+                ? "border-rose-500/20 bg-rose-500/[0.03] hover:border-rose-400/40"
+                : "border-white/10 bg-white/[0.03] hover:border-primary/40 hover:bg-white/[0.05]"
+                }`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
@@ -237,11 +236,10 @@ export default function GitHubPanel({ data }: { data: GitHubStats }) {
               </div>
               <div className="mt-2 flex items-center gap-2">
                 <span
-                  className={`inline-block text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded ${
-                    r.private
-                      ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
-                      : "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
-                  }`}
+                  className={`inline-block text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded ${r.private
+                    ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
+                    : "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
+                    }`}
                 >
                   {r.private ? "Private" : "Public"}
                 </span>
