@@ -7,9 +7,10 @@ export type LangSegment = {
   percentage: number;
 };
 
+// Cohesive cyan → blue scale (matches the dashboard's white + blue theme)
 const COLORS = [
-  "#00f0ff", "#a78bfa", "#f472b6", "#fbbf24",
-  "#34d399", "#60a5fa", "#fb7185", "#facc15",
+  "#22d3ee", "#06b6d4", "#0ea5e9", "#3b82f6",
+  "#2563eb", "#38bdf8", "#0891b2", "#1d4ed8",
 ];
 
 export default function LanguageBar({ items, label }: { items: LangSegment[]; label?: string }) {

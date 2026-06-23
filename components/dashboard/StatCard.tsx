@@ -8,7 +8,7 @@ type Props = {
   value: string | number;
   hint?: string;
   icon?: IconType;
-  accent?: "primary" | "violet" | "amber" | "rose" | "emerald";
+  accent?: "primary" | "violet" | "amber" | "rose" | "emerald" | "sky" | "blue" | "slate";
   delay?: number;
 };
 
@@ -18,6 +18,9 @@ const accentMap: Record<NonNullable<Props["accent"]>, string> = {
   amber: "from-amber-500/30 to-amber-500/0 text-amber-300",
   rose: "from-rose-500/30 to-rose-500/0 text-rose-300",
   emerald: "from-emerald-500/30 to-emerald-500/0 text-emerald-300",
+  sky: "from-sky-500/30 to-sky-500/0 text-sky-300",
+  blue: "from-blue-500/30 to-blue-500/0 text-blue-300",
+  slate: "from-slate-500/30 to-slate-500/0 text-slate-300",
 };
 
 export default function StatCard({ label, value, hint, icon: Icon, accent = "primary", delay = 0 }: Props) {
