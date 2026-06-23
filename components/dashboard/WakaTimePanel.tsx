@@ -368,7 +368,7 @@ export default function WakaTimePanel({ data }: { data: WakaStats }) {
           Time at the editor.
         </h2>
         <p className="text-gray-400 text-base mt-3 max-w-2xl leading-relaxed">
-          Where my last 7 days went — tracked from VSCode by WakaTime.
+          Where my last 7 days went tracked from VSCode by WakaTime.
           {data.bestDay && (
             <>
               {" "}Most active on <span className="text-white">{formatRelativeDate(data.bestDay.date)}</span> ({data.bestDay.text}).
