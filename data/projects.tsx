@@ -59,7 +59,7 @@ export const allProjects: Project[] = [
             "Role-based Dashboard (Admin & User)",
             "Custom CMS for Landing Page Content"
         ],
-        externalLink: "https://demo-carservices.lumevotech.com/"
+        externalLink: "https://satyaperkasamobilindo.com/"
     },
     {
         id: 3,
@@ -106,7 +106,7 @@ export const allProjects: Project[] = [
             "Real-time Transaction Processing",
             "Admin Dashboard with Analytics"
         ],
-        externalLink: "https://demo-nox.lumevotech.com/"
+        externalLink: "https://noxconnection.com/"
     },
     {
         id: 5,
@@ -136,6 +136,8 @@ export const allProjects: Project[] = [
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-yellow-700/60 to-slate-900",
+        image: "/img/applethrift-thumbnail.png",
+        galleryImages: ["/img/applethrift-thumbnail.png"],
         techDetails: "Inventory and sales management system built with Laravel and MySQL, designed to manage iPhone unit stock, sales tracking, and customer records for a thrift retail operation.",
         features: [
             "iPhone Unit Stock Management",
@@ -144,7 +146,7 @@ export const allProjects: Project[] = [
             "Product Condition Grading",
             "Sales Performance Dashboard"
         ],
-        externalLink: "https://manajemen.applethrift.id/"
+        externalLink: "https://manajemen.applethrift.id/login"
     },
     {
         id: 7,

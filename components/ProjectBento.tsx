@@ -1,84 +1,84 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiExternalLink, FiX, FiLayers, FiChevronLeft, FiChevronRight, FiMaximize2 } from 'react-icons/fi';
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { FiArrowRight, FiArrowUpRight, FiExternalLink, FiLayers } from 'react-icons/fi';
 import { allProjects, Project } from '@/data/projects';
 import ProjectModal from '@/components/ProjectModal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiArrowRight } from 'react-icons/fi';
 
-
+const featured = allProjects.slice(0, 5);
 
 const ProjectBento = () => {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
     return (
-        <section id="work" className="relative w-full min-h-screen bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50">
+        <section
+            id="work"
+            className="relative w-full bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50"
+        >
+            {/* Ambient accents */}
+            <div className="absolute top-1/4 -right-20 w-160 h-160 bg-primary/5 blur-[150px] rounded-full pointer-events-none z-0" />
+            <div className="absolute inset-0 opacity-[0.025] pointer-events-none z-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
             {/* Header */}
-            <div className="max-w-7xl mx-auto mb-16 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+            <div className="max-w-7xl mx-auto mb-16 md:mb-24 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div>
-                    <motion.p
+                    <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-primary font-mono mb-2"
+                        className="flex items-center gap-3 mb-5"
                     >
-                    </motion.p>
+                    </motion.div>
                     <motion.h2
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 14 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-bold text-white tracking-tight"
+                        transition={{ delay: 0.05 }}
+                        className="text-4xl md:text-6xl font-bold text-white tracking-tight"
                     >
-                        Selected Works.
+                        Selected <span className="text-primary">Works.</span>
                     </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.15 }}
+                        className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed mt-5"
+                    >
+                        A curated selection of projects showcasing my work building robust interfaces and scalable backend systems.
+                    </motion.p>
                 </div>
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="text-gray-400 max-w-sm text-sm leading-relaxed"
-                >
-                    A collection of projects showcasing my expertise in building robust interfaces and scalable backend systems.
-                </motion.p>
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                    className="mt-6 md:mt-0 flex shrink-0"
+                    transition={{ delay: 0.25 }}
+                    className="shrink-0"
                 >
-                    <Link href="/projects" className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full backdrop-blur-sm transition-all group font-medium shadow-lg hover:shadow-cyan-500/20">
+                    <Link
+                        href="/projects"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-primary hover:text-dark text-white border border-white/10 hover:border-primary rounded-full backdrop-blur-sm transition-all group font-medium shadow-lg hover:shadow-primary/20"
+                    >
                         <span>View Full Portfolio</span>
                         <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </motion.div>
             </div>
 
-            {/* BENTO GRID */}
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-                }}
-                className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[250px] md:auto-rows-[320px] relative z-10"
-            >
-                {allProjects.slice(0, 5).map((project, index) => (
-                    <ProjectCard
+            {/* Zig-zag showcase rows */}
+            <div className="max-w-7xl mx-auto relative z-10 space-y-24 md:space-y-32">
+                {featured.map((project, index) => (
+                    <ShowcaseRow
                         key={project.id}
                         project={project}
-                        onClick={() => setSelectedProject(project)}
+                        index={index}
+                        onOpen={() => setSelectedProject(project)}
                     />
                 ))}
-            </motion.div>
+            </div>
 
             {/* PROJECT MODAL */}
             <AnimatePresence>
@@ -93,59 +93,126 @@ const ProjectBento = () => {
     );
 };
 
-// --- CARD COMPONENT ---
-const ProjectCard = ({ project, onClick }: { project: Project, onClick: () => void }) => {
+// --- SHOWCASE ROW ---
+const ShowcaseRow = ({
+    project,
+    index,
+    onOpen,
+}: {
+    project: Project;
+    index: number;
+    onOpen: () => void;
+}) => {
+    const reversed = index % 2 === 1;
+    const img = project.image ?? project.galleryImages?.[0];
+
+    // Subtle parallax on the screenshot as the row scrolls through view
+    const rowRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: rowRef,
+        offset: ["start end", "end start"],
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
     return (
         <motion.div
-            variants={{
-                hidden: { opacity: 0, scale: 0.95, y: 30 },
-                visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-            }}
-            onClick={onClick}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            className={`group relative overflow-hidden rounded-3xl border border-gray-800 cursor-pointer transition-shadow hover:shadow-[0_20px_40px_-15px_rgba(0,240,255,0.15)] ${project.span} ${project.bg}`}
+            ref={rowRef}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
         >
-            {/* Watermark Fallback background for all cards */}
-            <div className="absolute -right-10 -bottom-10 text-[12rem] text-white/5 rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
-                {project.stack[0]}
+            {/* Image */}
+            <div
+                onClick={onOpen}
+                className={`group relative cursor-pointer ${reversed ? "lg:order-2" : ""}`}
+            >
+                <div className="relative aspect-[16/11] rounded-3xl overflow-hidden border border-gray-800 bg-gray-900 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.8)] transition-colors duration-500 group-hover:border-primary/40">
+                    {img ? (
+                        <motion.div style={{ y }} className="absolute inset-x-0 -top-[20%] h-[140%]">
+                            <Image
+                                src={img}
+                                alt={project.title}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 640px"
+                                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                            />
+                        </motion.div>
+                    ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-gray-700">
+                            <FiLayers size={48} />
+                        </div>
+                    )}
+
+                    {/* Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl pointer-events-none" />
+
+                    {/* Hover CTA chip */}
+                    <span className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-dark text-sm font-bold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
+                        View case <FiArrowUpRight />
+                    </span>
+                </div>
             </div>
 
-            {/* Content Container */}
-            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-20">
-
-                {/* Top Tags */}
-                <div className="flex justify-between items-start">
-                    <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-xs font-medium tracking-wide text-gray-300 border border-white/5">
+            {/* Info */}
+            <div className={`relative ${reversed ? "lg:order-1" : ""}`}>
+                <div className="flex items-center gap-4 mb-5">
+                    <span className="text-5xl md:text-7xl font-bold text-white/10 leading-none select-none">
+                        {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-mono text-xs text-primary tracking-widest uppercase">
                         {project.category}
                     </span>
-                    <button className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/5 text-white/70 group-hover:bg-primary group-hover:text-dark group-hover:border-primary transition-all duration-300 -translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0">
-                        {project.externalLink ? <FiExternalLink size={18} /> : <FiMaximize2 size={18} />}
-                    </button>
                 </div>
 
-                {/* Bottom Info */}
-                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight group-hover:text-primary transition-colors duration-300">
-                        {project.title}
-                    </h3>
-                    <p className="text-gray-300 text-sm md:text-base line-clamp-2 md:line-clamp-3 mb-5 max-w-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 hidden md:block">
-                        {project.desc}
-                    </p>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+                    {project.title}
+                </h3>
 
-                    {/* Tech Stack Bar */}
-                    <div className="flex items-center gap-3 text-xl text-gray-400">
-                        {project.stack.map((icon, i) => (
-                            <span key={i} className="group-hover:text-white transition-colors duration-300">
-                                {icon}
+                <p className="text-gray-400 leading-relaxed mb-6 max-w-lg">
+                    {project.desc}
+                </p>
+
+                {project.features && project.features.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-7">
+                        {project.features.slice(0, 3).map((feature) => (
+                            <span
+                                key={feature}
+                                className="text-xs text-gray-400 bg-gray-900/70 border border-gray-800 px-3 py-1.5 rounded-full"
+                            >
+                                {feature}
                             </span>
                         ))}
                     </div>
+                )}
+
+                <div className="flex items-center gap-5 mb-8 text-2xl text-gray-500">
+                    {project.stack}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                    <button
+                        onClick={onOpen}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-white text-dark font-bold rounded-full hover:bg-primary transition-colors duration-300"
+                    >
+                        View Project <FiArrowUpRight />
+                    </button>
+                    {project.externalLink && (
+                        <a
+                            href={project.externalLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 border border-gray-700 text-gray-300 font-medium rounded-full hover:border-primary hover:text-primary transition-colors duration-300"
+                        >
+                            Live Demo <FiExternalLink size={16} />
+                        </a>
+                    )}
                 </div>
             </div>
         </motion.div>
     );
 };
-
-
 
 export default ProjectBento;

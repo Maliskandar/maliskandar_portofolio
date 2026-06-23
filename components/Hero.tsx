@@ -78,11 +78,10 @@ const Hero = () => {
                         <li key={href} className="flex-1">
                             <a
                                 href={href}
-                                className={`flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl transition-all active:scale-90 ${
-                                    primary
+                                className={`flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl transition-all active:scale-90 ${primary
                                         ? "text-primary"
                                         : "text-gray-400 hover:text-white active:text-primary"
-                                }`}
+                                    }`}
                             >
                                 <span className="relative flex items-center justify-center">
                                     <Icon className="text-[22px]" />
@@ -132,7 +131,7 @@ const Hero = () => {
                     >
                         {/* Eyebrow Label */}
                         <div className="flex items-center gap-3 justify-center lg:justify-start mb-6">
-                            <span className="w-8 h-[2px] bg-primary rounded-full"></span>
+                            {/* <span className="w-8 h-[2px] bg-primary rounded-full"></span> */}
                             <span className="font-mono text-primary text-sm tracking-widest uppercase">Hello, World!</span>
                         </div>
 
