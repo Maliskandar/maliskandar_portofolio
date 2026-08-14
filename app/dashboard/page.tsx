@@ -10,18 +10,18 @@ export const revalidate = 1800;
 export const metadata = {
   title: "Live Dashboard",
   description:
-    "Real‑time dashboard — GitHub activity and coding time tracked via WakaTime.",
+    "Real‑time dashboard GitHub activity and coding time tracked via WakaTime.",
   openGraph: {
-    title: "Live Dashboard — Muhammad Akmal Iskandar",
+    title: "Live Dashboard Muhammad Akmal Iskandar",
     description:
-      "Real‑time dashboard — GitHub activity and coding time tracked via WakaTime.",
+      "Real‑time dashboard GitHub activity and coding time tracked via WakaTime.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Live Dashboard — Muhammad Akmal Iskandar",
+    title: "Live Dashboard Muhammad Akmal Iskandar",
     description:
-      "Real‑time dashboard — GitHub activity and coding time tracked via WakaTime.",
+      "Real‑time dashboard GitHub activity and coding time tracked via WakaTime.",
   },
 };
 
@@ -72,10 +72,10 @@ export default async function DashboardPage() {
               I figured if I&apos;m going to claim &quot;full stack&quot; on the homepage, I might as well
               show the receipts. {totalHours > 0 && topLang ? (
                 <>This week I logged{" "}
-                <span className="text-white font-medium">{totalHours} hrs</span> at the editor,
-                mostly in <span className="text-white font-medium">{topLang}</span>.</>
+                  <span className="text-white font-medium">{totalHours} hrs</span> at the editor,
+                  mostly in <span className="text-white font-medium">{topLang}</span>.</>
               ) : (
-                <>Pulled live from GitHub and WakaTime — no smoke, no mirrors.</>
+                <>Pulled live from GitHub and WakaTime no smoke, no mirrors.</>
               )}
             </p>
 
