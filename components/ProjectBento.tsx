@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { FiArrowRight, FiArrowUpRight, FiExternalLink, FiLayers } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiArrowRight, FiArrowUpRight, FiExternalLink } from 'react-icons/fi';
 import { allProjects, Project } from '@/data/projects';
 import ProjectModal from '@/components/ProjectModal';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const featured = allProjects.slice(0, 5);
@@ -16,68 +15,65 @@ const ProjectBento = () => {
     return (
         <section
             id="work"
-            className="relative w-full bg-dark py-24 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50"
+            className="relative w-full bg-dark py-20 md:py-28 px-6 md:px-20 overflow-hidden font-sans border-t border-gray-800/50"
         >
-            {/* Ambient accents */}
+            {/* Ambient background accents */}
             <div className="absolute top-1/4 -right-20 w-160 h-160 bg-primary/5 blur-[150px] rounded-full pointer-events-none z-0" />
+            <div className="absolute bottom-10 -left-20 w-140 h-140 bg-secondary/5 blur-[140px] rounded-full pointer-events-none z-0" />
             <div className="absolute inset-0 opacity-[0.025] pointer-events-none z-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
-            {/* Header */}
-            <div className="max-w-7xl mx-auto mb-16 md:mb-24 relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
-                <div>
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="flex items-center gap-3 mb-5"
-                    >
-                    </motion.div>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 14 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.05 }}
-                        className="text-4xl md:text-6xl font-bold text-white tracking-tight"
-                    >
-                        Selected <span className="text-primary">Works.</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.15 }}
-                        className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed mt-5"
-                    >
-                        A curated selection of projects showcasing my work building robust interfaces and scalable backend systems.
-                    </motion.p>
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.25 }}
-                    className="shrink-0"
-                >
-                    <Link
-                        href="/projects"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-primary hover:text-dark text-white border border-white/10 hover:border-primary rounded-full backdrop-blur-sm transition-all group font-medium shadow-lg hover:shadow-primary/20"
-                    >
-                        <span>View Full Portfolio</span>
-                        <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                </motion.div>
-            </div>
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Header */}
+                <div className="mb-10 md:mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5 }}
+                            className="text-3xl md:text-5xl font-bold text-white tracking-tight"
+                        >
+                            Selected <span className="text-primary">Works.</span>
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed mt-3"
+                        >
+                            A curated selection of projects highlighting the technology stack, system architecture, and core features built for each solution.
+                        </motion.p>
+                    </div>
 
-            {/* Zig-zag showcase rows */}
-            <div className="max-w-7xl mx-auto relative z-10 space-y-24 md:space-y-32">
-                {featured.map((project, index) => (
-                    <ShowcaseRow
-                        key={project.id}
-                        project={project}
-                        index={index}
-                        onOpen={() => setSelectedProject(project)}
-                    />
-                ))}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="shrink-0"
+                    >
+                        <Link
+                            href="/projects"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900/80 hover:bg-primary hover:text-dark text-white border border-gray-800 hover:border-primary rounded-full backdrop-blur-sm transition-all duration-300 group font-semibold text-sm shadow-lg hover:shadow-[0_0_20px_rgba(0,240,255,0.25)]"
+                        >
+                            <span>View Full Portfolio</span>
+                            <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </motion.div>
+                </div>
+
+                {/* Bento Grid Showcase: Grid on desktop, slidable row on mobile */}
+                <div className="flex md:grid md:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-2 pb-6 md:pb-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mr-6 pr-6 md:mr-0 md:pr-0">
+                    {featured.map((project, index) => (
+                        <BentoCard
+                            key={project.id}
+                            project={project}
+                            index={index}
+                            onOpen={() => setSelectedProject(project)}
+                        />
+                    ))}
+                </div>
             </div>
 
             {/* PROJECT MODAL */}
@@ -93,8 +89,8 @@ const ProjectBento = () => {
     );
 };
 
-// --- SHOWCASE ROW ---
-const ShowcaseRow = ({
+// --- BENTO GRID CARD (NO IMAGE BG, TECH STACK FOCUS) ---
+const BentoCard = ({
     project,
     index,
     onOpen,
@@ -103,112 +99,95 @@ const ShowcaseRow = ({
     index: number;
     onOpen: () => void;
 }) => {
-    const reversed = index % 2 === 1;
-    const img = project.image ?? project.galleryImages?.[0];
-
-    // Subtle parallax on the screenshot as the row scrolls through view
-    const rowRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: rowRef,
-        offset: ["start end", "end start"],
-    });
-    const y = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+    // Bento column spans for desktop
+    const getSpanClass = (i: number) => {
+        if (i === 0) return "md:col-span-2";
+        return "md:col-span-1";
+    };
 
     return (
         <motion.div
-            ref={rowRef}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.07 }}
+            className={`w-[80vw] sm:w-[330px] md:w-auto shrink-0 snap-start md:shrink ${getSpanClass(index)}`}
         >
-            {/* Image */}
             <div
                 onClick={onOpen}
-                className={`group relative cursor-pointer ${reversed ? "lg:order-2" : ""}`}
+                className="group relative cursor-pointer rounded-3xl bg-gray-900/40 backdrop-blur-xl border border-gray-800/80 hover:border-primary/50 p-6 md:p-7 flex flex-col justify-between h-full min-h-[350px] md:min-h-[370px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)]"
             >
-                <div className="relative aspect-[16/11] rounded-3xl overflow-hidden border border-gray-800 bg-gray-900 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.8)] transition-colors duration-500 group-hover:border-primary/40">
-                    {img ? (
-                        <motion.div style={{ y }} className="absolute inset-x-0 -top-[20%] h-[140%]">
-                            <Image
-                                src={img}
-                                alt={project.title}
-                                fill
-                                sizes="(max-width: 1024px) 100vw, 640px"
-                                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                            />
-                        </motion.div>
-                    ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-gray-700">
-                            <FiLayers size={48} />
+                {/* Background Ambient Mesh Glow */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent blur-3xl rounded-full opacity-30 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px] opacity-[0.03] group-hover:opacity-[0.07] transition-opacity pointer-events-none" />
+
+                <div className="relative z-10">
+                    {/* Header: Category & Number */}
+                    <div className="flex items-center justify-between mb-5">
+                        <span className="text-[11px] font-mono font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                            {project.category}
+                        </span>
+                        <span className="text-2xl font-mono font-bold text-white/15 group-hover:text-primary/60 transition-colors">
+                            0{index + 1}
+                        </span>
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                        {project.title}
+                    </h3>
+                    <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-6 line-clamp-3">
+                        {project.desc}
+                    </p>
+
+                    {/* Tech Stack Focus Box */}
+                    <div className="mb-5 bg-gray-950/60 border border-gray-800/90 rounded-2xl p-4 transition-colors group-hover:border-primary/30">
+                        <span className="block text-[10px] font-mono uppercase tracking-widest text-gray-500 mb-2.5">
+                            Tech Stack & Architecture
+                        </span>
+                        <div className="flex flex-wrap items-center gap-3 text-2xl text-primary">
+                            {project.stack.map((icon, i) => (
+                                <div key={i} className="p-2 rounded-xl bg-gray-900/90 border border-gray-800/80 text-primary hover:scale-110 transition-transform shadow-md">
+                                    {icon}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Key Features Pills */}
+                    {project.features && project.features.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                            {project.features.slice(0, 3).map((feat, fIdx) => (
+                                <span key={fIdx} className="text-[11px] text-gray-400 bg-gray-900/60 border border-gray-800 px-2.5 py-1 rounded-md">
+                                    • {feat}
+                                </span>
+                            ))}
                         </div>
                     )}
-
-                    {/* Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl pointer-events-none" />
-
-                    {/* Hover CTA chip */}
-                    <span className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-dark text-sm font-bold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg">
-                        View case <FiArrowUpRight />
-                    </span>
-                </div>
-            </div>
-
-            {/* Info */}
-            <div className={`relative ${reversed ? "lg:order-1" : ""}`}>
-                <div className="flex items-center gap-4 mb-5">
-                    <span className="text-5xl md:text-7xl font-bold text-white/10 leading-none select-none">
-                        {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-mono text-xs text-primary tracking-widest uppercase">
-                        {project.category}
-                    </span>
                 </div>
 
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-                    {project.title}
-                </h3>
-
-                <p className="text-gray-400 leading-relaxed mb-6 max-w-lg">
-                    {project.desc}
-                </p>
-
-                {project.features && project.features.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-7">
-                        {project.features.slice(0, 3).map((feature) => (
-                            <span
-                                key={feature}
-                                className="text-xs text-gray-400 bg-gray-900/70 border border-gray-800 px-3 py-1.5 rounded-full"
+                {/* Footer CTA */}
+                <div className="flex items-center justify-between border-t border-gray-800/80 pt-4 mt-2 z-10 relative">
+                    <span className="text-xs font-semibold text-gray-400 group-hover:text-white transition-colors">
+                        Explore Project
+                    </span>
+                    <div className="flex items-center gap-2">
+                        {project.externalLink && (
+                            <a
+                                href={project.externalLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="p-1.5 rounded-full text-gray-400 hover:text-primary hover:bg-primary/10 transition-colors"
+                                title="Live Demo"
                             >
-                                {feature}
-                            </span>
-                        ))}
+                                <FiExternalLink size={14} />
+                            </a>
+                        )}
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:translate-x-1 transition-transform">
+                            View Details <FiArrowUpRight size={15} />
+                        </span>
                     </div>
-                )}
-
-                <div className="flex items-center gap-5 mb-8 text-2xl text-gray-500">
-                    {project.stack}
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                    <button
-                        onClick={onOpen}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-white text-dark font-bold rounded-full hover:bg-primary transition-colors duration-300"
-                    >
-                        View Project <FiArrowUpRight />
-                    </button>
-                    {project.externalLink && (
-                        <a
-                            href={project.externalLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-3 border border-gray-700 text-gray-300 font-medium rounded-full hover:border-primary hover:text-primary transition-colors duration-300"
-                        >
-                            Live Demo <FiExternalLink size={16} />
-                        </a>
-                    )}
                 </div>
             </div>
         </motion.div>
@@ -216,3 +195,5 @@ const ShowcaseRow = ({
 };
 
 export default ProjectBento;
+
+

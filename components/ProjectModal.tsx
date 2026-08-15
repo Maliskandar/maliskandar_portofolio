@@ -1,211 +1,216 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiExternalLink, FiX, FiLayers, FiChevronLeft, FiChevronRight, FiArrowDown } from 'react-icons/fi';
+import { FiExternalLink, FiX, FiLayers, FiChevronLeft, FiChevronRight, FiCheckCircle } from 'react-icons/fi';
 import Image from 'next/image';
 import { Project } from '@/data/projects';
 
-const slideVariants = {
-    enter: (direction: number) => ({
-        x: direction > 0 ? 1000 : -1000,
-        opacity: 0,
-        zIndex: 0
-    }),
-    center: {
-        zIndex: 1,
-        x: 0,
-        opacity: 1
-    },
-    exit: (direction: number) => ({
-        zIndex: 0,
-        x: direction < 0 ? 1000 : -1000,
-        opacity: 0
-    })
-};
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velocity;
+export default function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-export default function ProjectModal({ project, onClose }: { project: Project, onClose: () => void }) {
-    const [[page, direction], setPage] = useState([0, 0]);
-    const [hasScrolled, setHasScrolled] = useState(false);
-
-    // Prevent body scroll when modal opens
+    // Lock body scroll when modal is active
     useEffect(() => {
+        const originalStyle = window.getComputedStyle(document.body).overflow;
         document.body.style.overflow = 'hidden';
-        return () => { document.body.style.overflow = 'unset'; };
+        return () => {
+            document.body.style.overflow = originalStyle;
+        };
     }, []);
 
-    useEffect(() => {
-        setHasScrolled(false);
-    }, [page]);
+    const activeImages = project.galleryImages?.length
+        ? project.galleryImages
+        : (project.image ? [project.image] : []);
 
-    const activeImages = project.galleryImages?.length ? project.galleryImages : (project.image ? [project.image] : []);
-    const imageIndex = Math.abs(page % activeImages.length);
+    const nextImage = () => {
+        if (activeImages.length > 1) {
+            setCurrentImageIndex((prev) => (prev + 1) % activeImages.length);
+        }
+    };
 
-    const paginate = (newDirection: number) => setPage([page + newDirection, newDirection]);
+    const prevImage = () => {
+        if (activeImages.length > 1) {
+            setCurrentImageIndex((prev) => (prev - 1 + activeImages.length) % activeImages.length);
+        }
+    };
 
     return (
         <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-6 bg-black/80 backdrop-blur-md"
             onClick={onClose}
         >
             <motion.div
-                initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="bg-[#0f1115] w-full max-w-5xl md:max-h-[90vh] max-h-[95vh] rounded-3xl border border-gray-800 overflow-hidden flex flex-col shadow-2xl relative"
+                initial={{ y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: "100%", opacity: 0 }}
+                transition={{ type: "spring", damping: 28, stiffness: 300 }}
+                className="bg-gray-950 w-full max-w-4xl max-h-[90vh] md:max-h-[85vh] rounded-t-[32px] md:rounded-[32px] border border-gray-800/90 overflow-hidden flex flex-col shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] relative text-white"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Close Button */}
-                <button
-                    onClick={onClose}
-                    className="absolute top-4 right-6 md:right-8 z-50 p-2.5 bg-black/50 backdrop-blur rounded-full hover:bg-white hover:text-black transition-colors text-white border border-white/10 shadow-lg"
-                >
-                    <FiX size={20} />
-                </button>
-
-                <div className="overflow-y-auto w-full h-full text-white custom-scrollbar">
-
-                    {/* Header Image Slider */}
-                    <div className="w-full h-[250px] md:h-[450px] relative flex items-center justify-center bg-gray-900 group overflow-hidden">
-                        {activeImages.length === 0 ? (
-                            <div className="text-gray-600 flex flex-col items-center">
-                                <FiLayers size={48} className="mb-2" />
-                                <span className="text-sm font-mono tracking-widest uppercase">No Image</span>
-                            </div>
-                        ) : (
-                            <>
-                                <AnimatePresence initial={false} custom={direction}>
-                                    <motion.div
-                                        id="scrollable-image-container"
-                                        onScroll={(e) => {
-                                            if (e.currentTarget.scrollTop > 50) setHasScrolled(true);
-                                            else setHasScrolled(false);
-                                        }}
-                                        key={page}
-                                        custom={direction} variants={slideVariants}
-                                        initial="enter" animate="center" exit="exit"
-                                        transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
-                                        drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={1}
-                                        onDragEnd={(e, { offset, velocity }) => {
-                                            const swipe = swipePower(offset.x, velocity.x);
-                                            if (swipe < -swipeConfidenceThreshold) paginate(1);
-                                            else if (swipe > swipeConfidenceThreshold) paginate(-1);
-                                        }}
-                                        className="absolute inset-0 w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar"
-                                    >
-                                        <Image
-                                            src={activeImages[imageIndex]}
-                                            alt={project.title}
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            className="w-full h-auto min-h-full object-cover object-top block"
-                                            draggable={false}
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-
-                                {/* Controls */}
-                                {activeImages.length > 1 && (
-                                    <>
-                                        <button onClick={(e) => { e.stopPropagation(); paginate(-1); }} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-white hover:text-black text-white rounded-full backdrop-blur transition-all opacity-0 group-hover:opacity-100 z-30 border border-white/10">
-                                            <FiChevronLeft size={24} />
-                                        </button>
-                                        <button onClick={(e) => { e.stopPropagation(); paginate(1); }} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-white hover:text-black text-white rounded-full backdrop-blur transition-all opacity-0 group-hover:opacity-100 z-30 border border-white/10">
-                                            <FiChevronRight size={24} />
-                                        </button>
-                                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30 bg-black/20 px-3 py-2 rounded-full backdrop-blur-sm border border-white/10">
-                                            {activeImages.map((_, idx) => (
-                                                <div key={idx} onClick={(e) => { e.stopPropagation(); const diff = idx - imageIndex; if (diff !== 0) paginate(diff); }} className={`w-2 h-2 rounded-full cursor-pointer transition-all ${idx === imageIndex ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/80'}`}></div>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                            </>
-                        )}
-                        {/* Overlay Gradient Soft and Scroll CTA */}
-                        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0f1115] via-[#0f1115]/80 to-transparent z-40 pointer-events-none flex flex-col justify-end items-center pb-8">
-                            <AnimatePresence>
-                                {!hasScrolled && activeImages.length > 0 && (
-                                    <motion.button 
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
-                                        onClick={() => {
-                                            const el = document.getElementById("scrollable-image-container");
-                                            if (el) el.scrollBy({ top: 350, behavior: 'smooth' });
-                                        }}
-                                        className="pointer-events-auto flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/20 text-white/90 px-5 py-2.5 rounded-full text-xs font-bold tracking-widest hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] animate-bounce"
-                                    >
-                                        <FiArrowDown size={16} />
-                                        <span>SCROLL GAMBAR</span>
-                                    </motion.button>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </div>
-
-                    {/* Content Details */}
-                    <div className="p-6 md:p-12 md:-mt-10 relative z-20">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-
-                            {/* Main Info */}
-                            <div className="lg:col-span-2 space-y-6">
-                                <div>
-                                    <span className="text-primary font-mono text-sm tracking-widest uppercase mb-2 block">{project.category}</span>
-                                    <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">{project.title}</h2>
-                                </div>
-                                <p className="text-gray-300 text-lg leading-relaxed text-justify">
-                                    {project.desc}
-                                </p>
-
-                                {project.techDetails && (
-                                    <div className="mt-8 p-6 bg-gray-900 border border-gray-800 rounded-2xl">
-                                        <h4 className="text-white font-bold mb-3">Technical Overview</h4>
-                                        <p className="text-sm text-gray-400 font-mono leading-relaxed">
-                                            {project.techDetails}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Sidebar Info */}
-                            <div className="space-y-8">
-                                <div>
-                                    <h4 className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-4">Technologies</h4>
-                                    <div className="flex flex-wrap gap-4 text-3xl text-gray-300">
-                                        {project.stack}
-                                    </div>
-                                </div>
-
-                                {project.features && (
-                                    <div>
-                                        <h4 className="text-gray-500 uppercase text-xs font-bold tracking-widest mb-4">Key Features</h4>
-                                        <ul className="space-y-3">
-                                            {project.features.map((feature, i) => (
-                                                <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                                                    <span className="text-primary mt-1">▹</span>
-                                                    <span>{feature}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {project.externalLink && (
-                                    <div className="pt-4 border-t border-gray-800">
-                                        <a href={project.externalLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-primary hover:text-white transition-colors">
-                                            Visit Project <FiExternalLink />
-                                        </a>
-                                    </div>
-                                )}
-                            </div>
-
-                        </div>
-                    </div>
-
+                {/* Mobile Drag Indicator Pill */}
+                <div className="flex md:hidden justify-center pt-3 pb-1 bg-gray-950">
+                    <div className="w-12 h-1.5 rounded-full bg-gray-800" />
                 </div>
+
+                {/* Sticky Header Bar */}
+                <div className="flex items-center justify-between px-5 md:px-7 py-3.5 md:py-4 border-b border-gray-800/80 bg-gray-950/90 backdrop-blur-md sticky top-0 z-30">
+                    <div className="flex items-center gap-3 overflow-hidden">
+                        <span className="text-[10px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">
+                            {project.category}
+                        </span>
+                        <h3 className="text-sm md:text-lg font-bold truncate text-gray-200">
+                            {project.title}
+                        </h3>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="p-2 rounded-full bg-gray-900 hover:bg-primary hover:text-dark text-gray-400 hover:text-dark transition-all border border-gray-800 shrink-0 cursor-pointer ml-3"
+                        aria-label="Close modal"
+                    >
+                        <FiX size={18} />
+                    </button>
+                </div>
+
+                {/* Modal Scrollable Body */}
+                <div className="overflow-y-auto w-full h-full custom-scrollbar scrollbar-none">
+                    {/* Image Gallery Showcase */}
+                    {activeImages.length > 0 ? (
+                        <div className="relative w-full aspect-[16/9] md:aspect-[16/9] bg-gray-900 overflow-hidden group">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentImageIndex}
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 1.02 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="relative w-full h-full"
+                                >
+                                    <Image
+                                        src={activeImages[currentImageIndex]}
+                                        alt={`${project.title} screenshot ${currentImageIndex + 1}`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 900px"
+                                        className="object-cover object-top"
+                                        priority
+                                    />
+                                </motion.div>
+                            </AnimatePresence>
+
+                            {/* Carousel Controls */}
+                            {activeImages.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 hover:bg-primary hover:text-dark text-white backdrop-blur-md border border-white/10 transition-all z-20 cursor-pointer"
+                                    >
+                                        <FiChevronLeft size={20} />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 hover:bg-primary hover:text-dark text-white backdrop-blur-md border border-white/10 transition-all z-20 cursor-pointer"
+                                    >
+                                        <FiChevronRight size={20} />
+                                    </button>
+
+                                    {/* Pagination Dots */}
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 z-20">
+                                        {activeImages.map((_, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
+                                                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                                                    idx === currentImageIndex ? 'w-5 bg-primary' : 'w-1.5 bg-white/40 hover:bg-white/70'
+                                                }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="w-full h-44 bg-gray-900 flex flex-col items-center justify-center text-gray-600">
+                            <FiLayers size={36} className="mb-2" />
+                            <span className="text-xs font-mono tracking-widest uppercase">No Preview Image</span>
+                        </div>
+                    )}
+
+                    {/* Details Content Container */}
+                    <div className="p-5 md:p-8 space-y-6">
+                        {/* Title & Category Header */}
+                        <div>
+                            <span className="text-primary font-mono text-xs tracking-widest uppercase mb-1 block">
+                                {project.category}
+                            </span>
+                            <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight mb-2.5">
+                                {project.title}
+                            </h2>
+                            <p className="text-gray-300 text-xs md:text-base leading-relaxed">
+                                {project.desc}
+                            </p>
+                        </div>
+
+                        {/* Tech Stack Icons Grid */}
+                        <div className="bg-gray-900/60 border border-gray-800/80 rounded-2xl p-4 md:p-5">
+                            <h4 className="text-gray-400 font-mono text-xs uppercase tracking-wider mb-3">
+                                Technology Stack
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-3 text-2xl text-primary">
+                                {project.stack.map((icon, i) => (
+                                    <div key={i} className="p-2.5 rounded-xl bg-gray-950 border border-gray-800 text-primary shadow-md hover:border-primary/40 transition-colors">
+                                        {icon}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Technical Overview */}
+                        {project.techDetails && (
+                            <div className="bg-gray-900/40 border border-gray-800/80 rounded-2xl p-4 md:p-5">
+                                <h4 className="text-gray-200 font-semibold text-sm mb-2">
+                                    Technical Architecture & Details
+                                </h4>
+                                <p className="text-gray-400 text-xs md:text-sm font-mono leading-relaxed">
+                                    {project.techDetails}
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Key Features List */}
+                        {project.features && project.features.length > 0 && (
+                            <div>
+                                <h4 className="text-gray-200 font-semibold text-sm mb-3">
+                                    Key Features & Highlights
+                                </h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                                    {project.features.map((feature, i) => (
+                                        <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-900/40 border border-gray-800/60 text-xs md:text-sm text-gray-300">
+                                            <FiCheckCircle size={16} className="text-primary shrink-0 mt-0.5" />
+                                            <span>{feature}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Sticky Action Footer */}
+                {project.externalLink && (
+                    <div className="p-4 bg-gray-950/95 border-t border-gray-800/80 sticky bottom-0 z-30">
+                        <a
+                            href={project.externalLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full py-3.5 px-6 bg-primary text-dark font-bold text-sm rounded-2xl hover:bg-cyan-300 transition-colors duration-300 shadow-[0_0_20px_rgba(0,240,255,0.3)]"
+                        >
+                            <span>Visit Live Project</span>
+                            <FiExternalLink size={16} />
+                        </a>
+                    </div>
+                )}
             </motion.div>
         </motion.div>
     );
 }
+

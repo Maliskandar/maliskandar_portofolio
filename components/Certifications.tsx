@@ -4,7 +4,7 @@ import React, { useRef, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
     FiCalendar, FiArrowUpRight, FiCode, FiDatabase,
-    FiPenTool, FiBarChart2, FiAward,
+    FiPenTool, FiBarChart2, FiAward, FiChevronDown, FiChevronUp
 } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
 
@@ -144,6 +144,7 @@ const Certifications = () => {
     const scaleX = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
 
     const [activeFilter, setActiveFilter] = useState<Category | "All">("All");
+    const [showAll, setShowAll] = useState(false);
 
     // Filter pills (only show categories that actually exist), with live counts
     const filters = useMemo(() => {
@@ -164,6 +165,16 @@ const Certifications = () => {
             : certifications.filter((c) => c.category === activeFilter),
         [activeFilter]
     );
+
+    const displayedCerts = useMemo(
+        () => showAll ? visibleCerts : visibleCerts.slice(0, 3),
+        [visibleCerts, showAll]
+    );
+
+    const handleFilterChange = (filter: Category | "All") => {
+        setActiveFilter(filter);
+        setShowAll(false);
+    };
 
     return (
         <section ref={sectionRef} id="certifications" className="relative w-full min-h-screen bg-dark py-20 md:py-28 px-6 md:px-20 border-t border-gray-800/50 overflow-hidden">
@@ -187,7 +198,7 @@ const Certifications = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.6 }}
-                    className="mb-12 text-center md:text-left"
+                    className="mb-10 md:mb-12 text-center md:text-left"
                 >
                     <h2 className="text-3xl md:text-5xl font-bold mb-4">
                         Professional <span className="text-primary">Certifications</span>
@@ -197,21 +208,21 @@ const Certifications = () => {
                     </p>
                 </motion.div>
 
-                {/* Filter pills */}
+                {/* Filter pills - slidable on mobile */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="flex flex-wrap gap-2.5 mb-12 justify-center md:justify-start"
+                    className="flex overflow-x-auto md:overflow-visible gap-3 mb-10 md:mb-12 py-3 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mr-6 pr-6 md:mr-0 md:pr-0 flex-nowrap md:flex-wrap justify-start items-center"
                 >
                     {filters.map((f) => {
                         const active = activeFilter === f.key;
                         return (
                             <button
                                 key={f.key}
-                                onClick={() => setActiveFilter(f.key)}
-                                className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${
+                                onClick={() => handleFilterChange(f.key)}
+                                className={`group shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-all duration-300 cursor-pointer ${
                                     active
                                         ? "bg-primary text-black border-primary shadow-[0_0_18px_rgba(0,240,255,0.35)]"
                                         : "bg-gray-900/50 text-gray-400 border-gray-800 hover:text-white hover:border-gray-600"
@@ -226,13 +237,13 @@ const Certifications = () => {
                     })}
                 </motion.div>
 
-                {/* Cards grid */}
+                {/* Cards grid on desktop, slidable peeked row on mobile */}
                 <motion.div
                     layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-2 pb-6 md:pb-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mr-6 pr-6 md:mr-0 md:pr-0"
                 >
                     <AnimatePresence mode="popLayout">
-                        {visibleCerts.map((cert) => {
+                        {displayedCerts.map((cert) => {
                             const style = categoryStyles[cert.category];
                             const Icon = style.icon;
                             return (
@@ -248,7 +259,7 @@ const Certifications = () => {
                                     exit="exit"
                                     whileHover={{ y: -6 }}
                                     style={{ ['--accent' as string]: style.color }}
-                                    className="relative bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 md:p-7 flex flex-col justify-between transition-colors duration-300 group overflow-hidden hover:border-(--accent) hover:shadow-[0_12px_40px_-12px_var(--accent)]"
+                                    className="relative w-[75vw] sm:w-[320px] max-w-[340px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink bg-gray-900/30 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 md:p-7 flex flex-col justify-between transition-colors duration-300 group overflow-hidden hover:border-(--accent) hover:shadow-[0_12px_40px_-12px_var(--accent)]"
                                 >
                                     {/* Accent corner glow */}
                                     <div
@@ -296,9 +307,33 @@ const Certifications = () => {
                     </AnimatePresence>
                 </motion.div>
 
+                {/* Show More / Show Less Button */}
+                {visibleCerts.length > 3 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-10 flex justify-center"
+                    >
+                        <button
+                            onClick={() => setShowAll(!showAll)}
+                            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-900/80 border border-gray-700/80 text-gray-200 text-sm font-medium hover:text-white hover:border-primary hover:shadow-[0_0_20px_rgba(0,240,255,0.25)] transition-all duration-300 cursor-pointer"
+                        >
+                            <span>
+                                {showAll ? "Show Less" : `Show More (${visibleCerts.length - 3} more)`}
+                            </span>
+                            {showAll ? (
+                                <FiChevronUp className="w-4 h-4 text-primary transition-transform group-hover:-translate-y-0.5" />
+                            ) : (
+                                <FiChevronDown className="w-4 h-4 text-primary transition-transform group-hover:translate-y-0.5" />
+                            )}
+                        </button>
+                    </motion.div>
+                )}
+
             </div>
         </section>
     );
 };
 
 export default Certifications;
+
