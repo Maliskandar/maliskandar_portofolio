@@ -228,20 +228,6 @@ export default function GitHubPanel({ data }: { data: GitHubStats }) {
             <h3 className="font-bold text-white text-lg flex items-center gap-2">
               <FiActivity className="text-primary" /> Contribution Graph
             </h3>
-            {data.authenticated && totals.private_commits_year === 0 && (
-              <p className="text-[11px] text-amber-400/80 mt-1 max-w-md">
-                Private contributions tidak muncul di kotak. Aktifkan di{" "}
-                <a
-                  href="https://github.com/settings/profile"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline hover:text-amber-300"
-                >
-                  GitHub Settings → Profile
-                </a>
-                {" "}→ centang &quot;Include private contributions on my profile&quot;.
-              </p>
-            )}
           </div>
           <div className="text-right">
             <div className="text-2xl font-black text-white tabular-nums leading-none">{contributions.total}</div>

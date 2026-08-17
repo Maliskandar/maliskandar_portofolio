@@ -1,15 +1,10 @@
 import type { NextConfig } from "next";
 
 // next.config.ts
-const nextConfig = {
+const nextConfig: NextConfig = {
   typescript: {
-    // !! WARN !!
-    // Mengabaikan error TypeScript agar deploy tetap jalan
+    // Mengabaikan error TypeScript saat build
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Mengabaikan error ESLint agar deploy tetap jalan
-    ignoreDuringBuilds: true,
   },
 };
 

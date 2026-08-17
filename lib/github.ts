@@ -1,11 +1,19 @@
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME || "Maliskandar";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-const headers: Record<string, string> = {
-  Accept: "application/vnd.github+json",
-  "X-GitHub-Api-Version": "2022-11-28",
-};
-if (GITHUB_TOKEN) headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+let tokenRejected = false;
+
+function getHeaders(useAuth = true): Record<string, string> {
+  const h: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "User-Agent": "Maliskandar-Portfolio",
+  };
+  if (GITHUB_TOKEN && useAuth && !tokenRejected) {
+    h.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  }
+  return h;
+}
 
 export type GitHubProfile = {
   login: string;
@@ -64,27 +72,59 @@ export type GitHubStats = {
   authenticated: boolean;
 };
 
-async function gh<T>(path: string): Promise<T> {
-  const res = await fetch(`https://api.github.com${path}`, {
-    headers,
+async function gh<T>(path: string, useAuth = true): Promise<T> {
+  const reqHeaders = getHeaders(useAuth);
+  let res = await fetch(`https://api.github.com${path}`, {
+    headers: reqHeaders,
     next: { revalidate: 3600 },
   });
+
+  // If token is invalid or expired (401 Bad credentials), fallback to public request
+  if ((res.status === 401 || res.status === 403) && GITHUB_TOKEN && useAuth) {
+    if (!tokenRejected) {
+      console.warn(`[github] Token returned ${res.status} on ${path}. Falling back to unauthenticated public requests.`);
+      tokenRejected = true;
+    }
+    const retrySep = path.includes("?") ? "&" : "?";
+    res = await fetch(`https://api.github.com${path}${retrySep}_public=1`, {
+      headers: getHeaders(false),
+      next: { revalidate: 3600 },
+    });
+  }
+
   if (!res.ok) throw new Error(`GitHub ${path} -> ${res.status}`);
   return res.json() as Promise<T>;
 }
 
 async function fetchAllRepos(): Promise<GitHubRepo[]> {
   const all: GitHubRepo[] = [];
-  // When authenticated, /user/repos returns both public + private owned by viewer.
-  // Otherwise, /users/{username}/repos returns public only.
-  const basePath = GITHUB_TOKEN
+  const useUserEndpoint = Boolean(GITHUB_TOKEN && !tokenRejected);
+  const basePath = useUserEndpoint
     ? `/user/repos?per_page=100&affiliation=owner&visibility=all&sort=updated`
     : `/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
-  for (let page = 1; page <= 5; page++) {
-    const sep = basePath.includes("?") ? "&" : "?";
-    const batch = await gh<GitHubRepo[]>(`${basePath}${sep}page=${page}`);
-    all.push(...batch);
-    if (batch.length < 100) break;
+
+  try {
+    for (let page = 1; page <= 5; page++) {
+      const sep = basePath.includes("?") ? "&" : "?";
+      const batch = await gh<GitHubRepo[]>(`${basePath}${sep}page=${page}`);
+      all.push(...batch);
+      if (batch.length < 100) break;
+    }
+  } catch (err) {
+    if (useUserEndpoint) {
+      console.warn(`[github] /user/repos failed, falling back to public /users/${GITHUB_USERNAME}/repos`);
+      tokenRejected = true;
+      for (let page = 1; page <= 5; page++) {
+        const batch = await gh<GitHubRepo[]>(
+          `/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated&page=${page}`,
+          false
+        );
+        all.push(...batch);
+        if (batch.length < 100) break;
+      }
+    } else {
+      throw err;
+    }
   }
   return all;
 }
@@ -92,7 +132,7 @@ async function fetchAllRepos(): Promise<GitHubRepo[]> {
 async function fetchContributionsGraphQL(
   username: string
 ): Promise<(GitHubStats["contributions"] & { restrictedCount: number; publicCount: number }) | null> {
-  if (!GITHUB_TOKEN) return null;
+  if (!GITHUB_TOKEN || tokenRejected) return null;
   const query = `query($login:String!){
     user(login:$login){
       contributionsCollection{
@@ -116,11 +156,15 @@ async function fetchContributionsGraphQL(
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         "Content-Type": "application/json",
+        "User-Agent": "Maliskandar-Portfolio",
       },
       body: JSON.stringify({ query, variables: { login: username } }),
       next: { revalidate: 3600 },
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      if (res.status === 401) tokenRejected = true;
+      return null;
+    }
     const json = (await res.json()) as {
       data?: {
         user?: {
@@ -269,7 +313,7 @@ export async function getGitHubStats(): Promise<GitHubStats> {
       contributions,
       fetchedAt: new Date().toISOString(),
       source: "live",
-      authenticated: !!GITHUB_TOKEN,
+      authenticated: Boolean(GITHUB_TOKEN && !tokenRejected),
     };
   } catch (err) {
     console.error("[github] falling back:", err);
