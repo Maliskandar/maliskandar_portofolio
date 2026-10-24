@@ -14,11 +14,11 @@ import {
 const experiences = [
     {
         id: 1,
-        role: "Web Developer Intern",
-        company: "Independent Midwife Practice (Bidan Delima)",
-        date: "Apr 2025 – Aug 2025",
-        desc: "Built a web-based Electronic Medical Record (EMR) platform with Laravel & MySQL, covering patient management, medical record entry, prescription & billing, and multi-format report printing.",
-        tags: ["Laravel", "MySQL", "EMR"],
+        role: "Software Engineer Intern",
+        company: "Ministry of Investment (BKPM)",
+        date: "Jan 2024 – Feb 2024",
+        desc: "Developed “Office Sentry”, a Laravel personnel-monitoring system that streamlined office guard management and internal operations.",
+        tags: ["Laravel", "RBAC"],
     },
     {
         id: 2,
@@ -30,11 +30,19 @@ const experiences = [
     },
     {
         id: 3,
-        role: "Software Engineer Intern",
-        company: "Ministry of Investment (BKPM)",
-        date: "Jan 2024 – Feb 2024",
-        desc: "Developed “Office Sentry”, a Laravel personnel-monitoring system that streamlined office guard management and internal operations.",
-        tags: ["Laravel", "RBAC"],
+        role: "Web Developer Intern",
+        company: "Independent Midwife Practice (Bidan Delima)",
+        date: "Apr 2025 – Aug 2025",
+        desc: "Built a web-based Electronic Medical Record (EMR) platform with Laravel & MySQL, covering patient management, medical record entry, prescription & billing, and multi-format report printing.",
+        tags: ["Laravel", "MySQL", "EMR"],
+    },
+    {
+        id: 4,
+        role: "Software Engineer",
+        company: "PT Lumen Evolution Technology (Work From Anywhere)",
+        date: "Aug 2025 – Oct 2026",
+        desc: "Delivered web applications for various clients as part of a two-person remote team. One of our projects was the video editing academy “Sector Ngedit,” which featured a Golang-based REST API and a PostgreSQL database, a front-end interface built with React/TypeScript, Midtrans payment integration with webhook verification, and the migration of a WordPress site hosting over 12,000 members without requiring any users to reset their passwords.",
+        tags: ["Golang", "PostgreSQL", "React", "TypeScript", "Midtrans"],
     },
 ];
 
