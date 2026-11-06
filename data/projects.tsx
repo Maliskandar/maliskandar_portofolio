@@ -31,6 +31,12 @@ export const allProjects: Project[] = [
         stack: [<SiReact key="r" />, <SiGo key="go" />, <SiPostgresql key="pg" />, <FiCreditCard key="mt" title="Midtrans" />, <FiDatabase key="gorm" title="GORM" />],
         span: "md:col-span-2 md:row-span-2",
         bg: "bg-gradient-to-br from-violet-800/50 to-slate-900",
+        image: "/projects/sector-ngedit/Sector Ngedit 1.webp",
+        galleryImages: [
+            "/projects/sector-ngedit/Sector Ngedit 1.webp",
+            "/projects/sector-ngedit/Sector Ngedit 2.webp",
+            "/projects/sector-ngedit/Sector Ngedit 3.webp"
+        ],
         techDetails: "Engineered with a decoupled architecture: a React SPA frontend consuming a high-performance Golang REST API. GORM manages a normalized PostgreSQL schema spanning users, courses, cohorts, transactions, and affiliate commissions, with tracked migrations enabling safe, zero-downtime schema evolution as the catalog scales past 12,000 members. Midtrans integration handles secure checkout with webhook-verified payment callbacks for instant course access.",
         features: [
             "Multi-Course Learning Dashboard with Progress Tracking",
@@ -50,6 +56,12 @@ export const allProjects: Project[] = [
         stack: [<SiNextdotjs key="nx" />, <SiReact key="r" />, <SiTypescript key="ts" />, <SiTailwindcss key="t" />, <SiFramer key="fm" />, <TbConfetti key="cf" title="Canvas Confetti" />, <SiLucide key="lc" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-neutral-800/60 to-slate-900",
+        image: "/projects/onyourway/OnYourWay 1.webp",
+        galleryImages: [
+            "/projects/onyourway/OnYourWay 1.webp",
+            "/projects/onyourway/OnYourWay 2.webp",
+            "/projects/onyourway/OnYourWay 3.webp"
+        ],
         techDetails: "Developed with Next.js 14 and Tailwind CSS, featuring high-end editorial aesthetics with fluid scroll-triggered micro-interactions powered by Framer Motion. Built on a modular component architecture using the React Context API for global shopping cart state management with real-time local persistence. The platform incorporates an intelligent AI Stylist chatbot for automated style recommendations, an interactive quick-view modal with live variant selection, a dynamic size recommendation guide, an instant WhatsApp checkout pipeline, and dynamic sitemap.xml and robots.txt generation for optimized SEO and ultra-fast static page delivery.",
         features: [
             "AI Fashion Stylist & Interactive Chatbot",
@@ -70,6 +82,12 @@ export const allProjects: Project[] = [
         stack: [<SiNextdotjs key="nx" />, <SiReact key="r" />, <SiTypescript key="ts" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-amber-800/40 to-slate-900",
+        image: "/projects/cutenik/Cute-Nik 1.webp",
+        galleryImages: [
+            "/projects/cutenik/Cute-Nik 1.webp",
+            "/projects/cutenik/Cute-Nik 2.webp",
+            "/projects/cutenik/Cute-Nik 3.webp"
+        ],
         techDetails: "Built with Next.js 15 and React 19 using TypeScript for full type safety, styled with Tailwind CSS v4. Statically exported and hosted on Vercel for ultra-fast delivery. A custom Sharp-based image pipeline generates responsive image variants without consuming Vercel's Image Optimization quota. Includes synonym-aware color search, dynamic sitemap.xml/robots.txt, and per-page metadata with Open Graph images for social sharing.",
         features: [
             "Dynamic Product Catalog Organized by Category",
@@ -89,6 +107,12 @@ export const allProjects: Project[] = [
         stack: [<SiNextdotjs key="nx" />, <SiReact key="r" />, <SiTypescript key="ts" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-emerald-800/40 to-slate-900",
+        image: "/projects/klinik-dr-ilham/Dr. Ilham 1.webp",
+        galleryImages: [
+            "/projects/klinik-dr-ilham/Dr. Ilham 1.webp",
+            "/projects/klinik-dr-ilham/Dr. Ilham 2.webp",
+            "/projects/klinik-dr-ilham/Dr. Ilham 3.webp"
+        ],
         techDetails: "Built with Next.js 14 (App Router) and React 18 using TypeScript for type safety, styled with lightweight styled-jsx to avoid external CSS framework dependencies. Structured content lives in a typed data layer for easy maintenance and scaling. Interactive product detail modals, WhatsApp-integrated booking, and rich-content blog articles are optimized with Next.js Image Optimization and selective video loading for treatment showcases.",
         features: [
             "Multi-Service Polyclinic — General, Muscle/Joint, Nerve, Minor Surgery, Nebulizer & Mini Lab",
@@ -108,6 +132,12 @@ export const allProjects: Project[] = [
         stack: [<SiNextdotjs key="nx" />, <SiLaravel key="l" />, <SiMysql key="m" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-yellow-900/50 to-slate-900",
+        image: "/projects/robeena/Robeena 1.webp",
+        galleryImages: [
+            "/projects/robeena/Robeena 1.webp",
+            "/projects/robeena/Robeena 2.webp",
+            "/projects/robeena/Robeena 3.webp"
+        ],
         techDetails: "Built as a complete full-stack solution with a Next.js 16 frontend (Tailwind CSS) and a Laravel 13 REST API backend. Authentication uses JWT via Laravel Sanctum with multi-role, partner-level access control. Real-time dashboards surface customer analytics and KPIs, while a database-driven inventory system tracks stock automatically across POS transactions. Deployed with an automated CI/CD pipeline for the frontend and a scripted deploy flow for the backend on shared hosting.",
         features: [
             "JWT Authentication with Multi-Role Authorization",
@@ -188,14 +218,11 @@ export const allProjects: Project[] = [
         stack: [<SiLaravel key="l" />, <SiMysql key="m" />, <SiTailwindcss key="t" />],
         span: "md:col-span-1 md:row-span-1",
         bg: "bg-gradient-to-br from-indigo-900/60 to-slate-900",
-        image: "/projects/nox-connection/a.webp",
+        image: "/projects/nox-connection/Noxconnection 1.webp",
         galleryImages: [
-            "/projects/nox-connection/a.webp",
-            "/projects/nox-connection/b.webp",
-            "/projects/nox-connection/c.webp",
-            "/projects/nox-connection/d.webp",
-            "/projects/nox-connection/e.webp",
-            "/projects/nox-connection/f.webp"
+            "/projects/nox-connection/Noxconnection 1.webp",
+            "/projects/nox-connection/Noxconnection 2.webp",
+            "/projects/nox-connection/Noxconnection 3.webp"
         ],
         techDetails: "Built with Laravel and MySQL targeting international markets. Implements payment gateway integration, multi-currency support, and B2B reseller tier management for streamlined game credit distribution.",
         features: [

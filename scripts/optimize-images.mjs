@@ -3,6 +3,11 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const TARGETS = [
+    'public/projects/sector-ngedit',
+    'public/projects/onyourway',
+    'public/projects/cutenik',
+    'public/projects/klinik-dr-ilham',
+    'public/projects/robeena',
     'public/projects/cashify',
     'public/projects/nox-connection',
     'public/projects/smk-almusyaffa',
